@@ -1,0 +1,43 @@
+<section th:fragment="mainmenu" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="ec-nav sticky-top bg-white">
+        <div class="container">
+            <div class="navbar p-0 navbar-expand-lg">
+                <div class="navbar-brand">
+                    <a class="logo-default" href="index.html"><img alt="" src="assets/img/logo-black.png"></a>
+                </div>
+                <span aria-expanded="false" class="navbar-toggler ml-auto collapsed" data-target="#ec-nav__collapsible" data-toggle="collapse">
+        <div class="hamburger hamburger--spin js-hamburger">
+          <div class="hamburger-box">
+            <div class="hamburger-inner"></div>
+          </div>
+        </div>
+      </span>
+                <div class="collapse navbar-collapse when-collapsed" id="ec-nav__collapsible">
+                    <ul class="nav navbar-nav ec-nav__navbar ml-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html"> Home </a>
+                        </li>
+                        <li class="nav-item nav-item__has-dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> About us </a>
+                            <div class="dropdown-menu">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a class="nav-link__list" href="index.html"> Keynotes </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link__list" href="index.html"> Index </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html"> Contacts </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- END container-->
+    </nav> <!-- END ec-nav -->
+</section>
