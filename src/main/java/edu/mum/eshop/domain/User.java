@@ -8,14 +8,10 @@ import java.util.List;
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank
-    private String userName;
-    @NotBlank
-    private String email;
-    @NotBlank
-    private String password;
-    @NotNull
-    private Role role;
+    @NotBlank private String userName;
+    @NotBlank private String email;
+    @NotBlank private String password;
+    @NotNull private Role role;
     @OneToMany private List<Product> products;
     @OneToMany private List<PurchaseOrder> purchaseOrders;
 }
