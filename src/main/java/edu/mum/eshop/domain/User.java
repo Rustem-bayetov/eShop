@@ -1,24 +1,21 @@
 package edu.mum.eshop.domain;
-
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Data
-@Entity
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+@Data @Entity
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @NotBlank
     private String userName;
-
+    @NotBlank
     private String email;
-
+    @NotBlank
     private String password;
-
+    @NotNull
     private Role role;
+    @OneToMany private List<Product> products;
+    @OneToMany private List<PurchaseOrder> purchaseOrders;
 }
