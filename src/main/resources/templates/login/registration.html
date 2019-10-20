@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+</head>
+<body>
+
+<a th:href="@{/login}">Login</a>
+
+<div class="container">
+
+    <form autocomplete="on" action="#" th:action="@{/sellerRegistration}" th:object="${user}" method="post">
+        <h2>Buyer Registration</h2>
+
+        <input type="text" th:field="*{firstName}" placeholder="First Name"/>
+
+        <input type="text" th:field="*{lastName}" placeholder="Last Name"/>
+
+        <input type="text" th:field="*{email}" placeholder="Email"/>
+
+        <input type="password" th:field="*{password}" placeholder="Password"/>
+
+        <button type="submit">Buyer Register</button>
+
+    </form>
+</div>
+
+</body>
+</html>
