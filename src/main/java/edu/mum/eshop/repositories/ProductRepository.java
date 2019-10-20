@@ -1,4 +1,4 @@
-package edu.mum.eshop.repository;
+package edu.mum.eshop.repositories;
 
 import edu.mum.eshop.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
