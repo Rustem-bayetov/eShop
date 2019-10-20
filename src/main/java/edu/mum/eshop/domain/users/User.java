@@ -1,8 +1,11 @@
 package edu.mum.eshop.domain.users;
 
+import edu.mum.eshop.domain.Product;
+import edu.mum.eshop.domain.PurchaseOrder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,6 +35,11 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany
+    private List<Product> products;
+    @OneToMany
+    private List<PurchaseOrder> purchaseOrders;
 
 }
 
