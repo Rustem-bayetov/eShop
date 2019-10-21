@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductService {
     List<Product> getAll(ProductFilter filter);
 
-    void save(Product product);
+    Product save(Product product);
 
     Product getById(Integer id);
 

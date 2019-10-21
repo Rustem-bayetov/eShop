@@ -38,7 +38,7 @@ var $assetsPath ='vendor',
             callback();
         };
     }
-    script.src = "assets\\" + url;
+    script.src = "\\" + url;
     document.getElementsByTagName("body")[0].appendChild(script);
 }
   

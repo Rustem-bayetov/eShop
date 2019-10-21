@@ -1,0 +1,313 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{./fragments/_layout}">
+<head>
+    <title>Gadget bay</title>
+</head>
+<body>
+    <section layout:fragment="content">
+
+    <div class="py-5 bg-light-v2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Product details</h2>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end bg-transparent">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/products/}"> Shop</a>
+                        </li>
+                        <li class="breadcrumb-item"> Product</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mr-auto mt-4">
+                    <div class="border border-light p-5">
+                        <img class="w-100" th:src="${product.imageUrl}" th:alt="${product.title}">
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4">
+                    <h2 th:text="${product.title}"></h2>
+                    <p>seller <a href="#" class="text-dark">Cory Althoff</a></p>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">3 customer reviews</li>
+                    </ul>
+                    <h4 th:if="${product.discount} > 0" class="mb-3">
+                        <span class="text-primary" th:text="${#numbers.formatDecimal(product.price - (product.price / 100) * product.discount, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                        <span class="text-gray"><s th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</s></span>
+                    </h4>
+                    <h4 th:if="${product.discount} == 0" class="mb-3">
+                        <span class="text-primary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                    </h4>
+                    <p th:if="${product.availableCount > 0}"><i class="fas fa-check-circle text-success mr-2"></i><span th:text="${product.availableCount}"></span> item(s) available on stock</p>
+                    <p th:if="${product.availableCount == 0}"><i class="fas fa-times-circle danger mr-2"></i>Out of stock</p>
+                    <div class="mb-2">
+                        <h4>Description</h4>
+                        <div th:text="${product.description}" class="mt-3">
+
+                        </div>
+                    </div>
+
+                    <div class="d-md-flex">
+                        <div class="input-group ec-touchspin mb-2 mr-3 width-10rem">
+                            <div class="ec-touchspin__minus input-group-prepend">
+                                <span class="input-group-text ti ti-minus bg-white"></span>
+                            </div>
+                            <input class="ec-touchspin__result form-control bg-white text-center" type="text" value="1">
+                            <div class="input-group-append">
+                                <span class="ec-touchspin__plus input-group-text ti-plus bg-white"></span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-icon mb-2 mr-3"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
+                    </div>
+                    <ul class="list-inline my-3">
+                        <li class="list-inline-item">Payment:</li>
+                        <li class="list-inline-item"><img src="/img/shop/payment/paypal.jpg" alt=""></li>
+                        <li class="list-inline-item"><img src="/img/shop/payment/mastro.jpg" alt=""></li>
+                        <li class="list-inline-item"><img src="/img/shop/payment/mastercard.jpg" alt=""></li>
+                        <li class="list-inline-item"><img src="/img/shop/payment/visa.jpg" alt=""></li>
+                        <li class="list-inline-item"><img src="/img/shop/payment/ae.jpg" alt=""></li>
+                    </ul>
+                </div>
+            </div> <!-- END row-->
+        </div> <!-- END container-->
+    </section>
+
+    <section class="padding-y-100 bg-light-v2">
+        <div class="container">
+            <div class="list-card p-4 shadow-v1">
+                <div class="col-12">
+                    <h4 class="mb-4">Reviews</h4>
+
+                    <div class="row px-0 align-items-center border p-4">
+                        <div class="col-md-4 text-center">
+                            <h1 class="display-4 text-primary mb-0">
+                                4.70
+                            </h1>
+                            <p class="my-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </p>
+                            <p class="mb-0">
+                                Average Rating
+                            </p>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="width-7rem text-light d-none d-sm-block mr-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                                <div class="progress flex-auto mr-3" style="height:10px">
+                                    <div class="progress-bar bg-primary" style="width:100%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
+                                </div>
+                                <span>90%</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="width-7rem text-light d-none d-sm-block mr-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="progress flex-auto mr-3" style="height:10px">
+                                    <div class="progress-bar bg-primary" style="width:80%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
+                                </div>
+                                <span>87%</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="width-7rem text-light d-none d-sm-block mr-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="progress flex-auto mr-3" style="height:10px">
+                                    <div class="progress-bar bg-primary" style="width:60%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
+                                </div>
+                                <span>34%</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="width-7rem text-light d-none d-sm-block mr-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="progress flex-auto mr-3" style="height:10px">
+                                    <div class="progress-bar bg-primary" style="width:40%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
+                                </div>
+                                <span>12%</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="width-7rem text-light d-none d-sm-block mr-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="progress flex-auto mr-3" style="height:10px">
+                                    <div class="progress-bar bg-primary" style="width:10%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
+                                </div>
+                                <span>2%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom mx-0 py-4 mt-4">
+                        <div class="col-md-4 my-2 media">
+                            <img class="iconbox iconbox-xl" src="assets/img/avatar/4.jpg" alt="">
+                            <div class="media-body ml-4">
+                                <small class="text-gray">7 min ago</small>
+                                <h6>
+                                    Anthony Forsey
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-8 my-2">
+                            <p>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </p>
+                            <p>
+                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty they conctetur they kedadip lectores legee sicing.
+                            </p>
+                        </div>
+                    </div> <!-- END row-->
+
+                    <div class="row border-bottom mx-0 py-4 mt-4">
+                        <div class="col-md-4 my-2 media">
+                            <img class="iconbox iconbox-xl" src="assets/img/avatar/5.jpg" alt="">
+                            <div class="media-body ml-4">
+                                <small class="text-gray">1 mon ago</small>
+                                <h6>
+                                    Justin Nam
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-8 my-2">
+                            <p class="text-light">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </p>
+                            <p>
+                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty.
+                            </p>
+                        </div>
+                    </div> <!-- END row-->
+
+                    <div class="row border-bottom mx-0 py-4 mt-4">
+                        <div class="col-md-4 my-2 media">
+                            <div class="iconbox iconbox-xl border">
+                                MD
+                            </div>
+                            <div class="media-body ml-4">
+                                <small class="text-gray">3 Mon ago</small>
+                                <h6>
+                                    Murir Dokan
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-8 my-2">
+                            <p>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </p>
+                            <p>
+                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty they conctetur they kedadip lectores legee sicing.
+                            </p>
+                        </div>
+                    </div> <!-- END row-->
+
+                    <div class="text-center mt-5">
+                        <a href="#" class="btn btn-primary btn-icon">
+                            <i class="ti-reload mr-2"></i>
+                            Load More
+                        </a>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <h4>Leave Review</h4>
+                            <ul class="list-inline mt-3">
+                                <li class="list-inline-item">
+                                    Rating
+                                </li>
+                                <li class="list-inline-item">
+                                    <ul class="list-unstyled ec-rating" data-state-class="text-warning">
+
+                                        <li class="text-warning active">
+                                            <i class="fas fa-star"></i>
+                                        </li>
+
+                                        <li class="active">
+                                            <i class="fas fa-star"></i>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-star"></i>
+                                        </li>
+
+                                        <li>
+                                            <i class="fas fa-star"></i>
+                                        </li>
+
+                                        <li>
+                                            <i class="fas fa-star"></i>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label>Name</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label>Email</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label>Subject</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label>Comment</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                            <button class="btn btn-primary mt-4">Publish Review</button>
+                        </div>
+                    </div>
+                </div> <!-- END col-12 -->
+            </div> <!-- END list-card-->
+        </div> <!-- END container-->
+    </section>
+
+    </section>
+</body>
+</html>

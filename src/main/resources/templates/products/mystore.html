@@ -10,6 +10,7 @@
                     <div class="card card-body marginTop-30">
 
                         <form th:object="${filter}" method="get">
+
                             <label th:each="category : ${categories}" class="ec-radio radio-thin mb-3 mr-4">
                                 <input type="radio" th:field="*{categoryId}" name="category" th:value="${category.id}">
                                 <span class="ec-radio__control"></span>
@@ -24,6 +25,10 @@
 
                 <div class="col-md-9">
                     <div class="row">
+                        <div class="marginTop-30 w-100 card d-md-flex align-items-end bg-white shadow-v1 rounded py-4 px-5" style="margin-left: 15px; margin-right: 15px;">
+                                <a th:href="@{/products/edit/0}" class="btn btn-outline-primary">Add product</a>
+                        </div>
+
                         <div th:each="product : ${products}" class="col-lg-4 col-md-6 marginTop-30 wow fadeIn">
                             <div class="card text-center height-100p shadow-v1">
                                 <span th:if="${product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${product.discount} + '%'">-20%</span>
@@ -43,8 +48,12 @@
                                         </p>
                                     </div>
                                 </div>
+                                <div class="card-footer border-top-0">
+                                    <button class="btn btn-outline-primary mx-1">Edit product</button>
+                                </div>
                             </div>
                         </div>
+
                     </div> <!-- END row-->
                 </div> <!-- END col-md-9-->
             </div> <!-- END row-->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
 
@@ -20,9 +20,8 @@
     <link rel="stylesheet" href="/css/vendors.bundle.css">
     <link rel="stylesheet" href="/css/style.css">
 
-    <script src="/vendor/jquery/dist/jquery.min.js"></script>
-    <script th:src="@{/js/vendors.bundle.js}"></script>
-    <script th:src="@{/js/scripts.js}"></script>
+    <script src="/js/vendors.bundle.js"></script>
+    <script src="/js/scripts.js"></script>
 </head>
 <body>
     <div th:replace="fragments/_mainmenu :: mainmenu"></div>
