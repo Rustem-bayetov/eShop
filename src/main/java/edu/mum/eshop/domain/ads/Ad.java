@@ -1,4 +1,4 @@
-package edu.mum.eshop.domain;
+package edu.mum.eshop.domain.ads;
 import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,8 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 @Data @Entity
 public class Ad {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     private Integer id;
     @NotBlank
     private String description;

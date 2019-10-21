@@ -1,8 +1,15 @@
 package edu.mum.eshop.services;
-import edu.mum.eshop.domain.Ad;
-import java.util.List;
+import edu.mum.eshop.domain.ads.Ad;
+import edu.mum.eshop.domain.ads.AdRequest;
+
+import java.util.Optional;
+
 public interface AdService {
-    List<Ad> getAll();
-    void save(Ad ad);
-    Ad getById(Integer id);
+    Iterable<Ad> getAllAds();
+    Ad saveAd(Ad ad);
+    Optional<Ad> getById(Integer id);
+    AdRequest saveAdRequest(AdRequest adRequest);
+    Iterable<AdRequest> getAllAdRequests();
+
+
 }
