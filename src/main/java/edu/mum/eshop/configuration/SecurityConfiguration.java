@@ -48,7 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/buyerRegistration").permitAll()
                 .antMatchers("/sellerRegistration").permitAll()
+
+                .antMatchers("/products/").permitAll()
+
                 .antMatchers("/home").hasAnyAuthority("BUYER", "SELLER").anyRequest()
+
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/home")

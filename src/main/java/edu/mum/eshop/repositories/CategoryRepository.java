@@ -1,9 +1,9 @@
 package edu.mum.eshop.repositories;
 
-import edu.mum.eshop.domain.product.Product;
+import edu.mum.eshop.domain.product.Category;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Integer> {
+public interface CategoryRepository extends CrudRepository<Category, Integer> {
 }

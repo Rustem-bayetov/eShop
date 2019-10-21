@@ -1,5 +1,5 @@
 package edu.mum.eshop.domain.ads;
-import edu.mum.eshop.domain.Product;
+import edu.mum.eshop.domain.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;

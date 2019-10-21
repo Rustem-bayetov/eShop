@@ -1,7 +1,7 @@
 package edu.mum.eshop.domain.users;
 
-import edu.mum.eshop.domain.Product;
 import edu.mum.eshop.domain.PurchaseOrder;
+import edu.mum.eshop.domain.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;

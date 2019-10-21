@@ -1,0 +1,59 @@
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{./fragments/_layout}">
+<head>
+    <title>Products</title>
+</head>
+<body>
+    <section layout:fragment="content" class="pt-5 paddingBottom-100 bg-light-v2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-body marginTop-30">
+
+                        <form th:object="${filter}" method="get">
+
+                            <label th:each="category : ${categories}" class="ec-radio radio-thin mb-3 mr-4">
+                                <input type="radio" th:field="*{categoryId}" name="category" th:value="${category.id}">
+                                <span class="ec-radio__control"></span>
+                                <span class="ec-radio__label" th:text="${category.name}"></span>
+                            </label>
+
+                            <input type="submit" class="btn btn-block btn-primary" value="Apply filter" />
+                        </form>
+
+                    </div>
+                </div> <!-- END col-md-3 -->
+
+                <div class="col-md-9">
+                    <div class="row">
+
+                        <div th:each="product : ${products}" class="col-lg-4 col-md-6 marginTop-30 wow fadeIn">
+                            <div class="card text-center height-100p shadow-v1">
+                                <span th:if="${product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${product.discount} + '%'">-20%</span>
+                                <div class="card-header">
+                                    <img class="w-100" th:src="${product.imageUrl}" th:alt="${product.title}">
+                                </div>
+                                <div class="card-body px-3 py-0">
+                                    <a href="shop-single.html" class="h6" th:text="${product.title}">product title</a>
+<!--                                    <p class="text-gray" th:text="${product.description}">description</p>-->
+                                    <div class="">
+                                        <p th:if="${product.discount} > 0" class="mb-0 font-weight-semiBold">
+                                            <span class="text-primary" th:text="${#numbers.formatDecimal(product.price - (product.price / 100) * product.discount, 0, 'COMMA', 2, 'POINT')}">$65.45</span>
+                                            <span class=" text-gray"><s th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</s></span>
+                                        </p>
+                                        <p th:if="${product.discount} == 0" class="mb-0 font-weight-semiBold">
+                                            <span class="text-primary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- END row-->
+                </div> <!-- END col-md-9-->
+            </div> <!-- END row-->
+        </div> <!-- END container-->
+    </section>
+
+
+</body>
+</html>
