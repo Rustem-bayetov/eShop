@@ -5,7 +5,10 @@
 <body>
     <div layout:fragment="content" class="container my-5">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-12">
+                <a th:href="@{/products/mystore}" class="btn btn-outline-primary">Back to my store</a>
+            </div>
+            <div class="col-12 text-center my-3">
                 <h4 th:if="${product.id} == 0">
                     New product
                 </h4>
@@ -20,6 +23,8 @@
                             <li th:each="err : ${#fields.errors('*')}" th:text="${err}">error</li>
                         </ul>
                     </div>
+
+                    <input type="hidden" th:field="*{user}">
 
                     <div class="row form-group">
                         <label th:text="#{product.id}" for="id" class="col-2 col-form-label text-right">ID</label>
@@ -37,7 +42,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.description}" for="title" class="col-2 col-form-label text-right">description</label>
+                        <label th:text="#{product.description}" for="description" class="col-2 col-form-label text-right">description</label>
                         <div class="col-10">
                             <textarea class="form-control" th:field="*{description}" id="description"></textarea>
                             <small class="form-text text-muted text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
@@ -45,7 +50,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.price}" for="title" class="col-2 col-form-label text-right">price</label>
+                        <label th:text="#{product.price}" for="price" class="col-2 col-form-label text-right">price</label>
                         <div class="col-10">
                             <input class="form-control" type="number" step="0.01" th:field="*{price}" id="price">
                             <small class="form-text text-muted text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
@@ -53,7 +58,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.discount}" for="title" class="col-2 col-form-label text-right">discount</label>
+                        <label th:text="#{product.discount}" for="discount" class="col-2 col-form-label text-right">discount</label>
                         <div class="col-10">
                             <input class="form-control" type="number" th:field="*{discount}" id="discount">
                             <small class="form-text text-muted text-danger" th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}"></small>
@@ -61,7 +66,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.availableCount}" for="title" class="col-2 col-form-label text-right">availableCount</label>
+                        <label th:text="#{product.availableCount}" for="availableCount" class="col-2 col-form-label text-right">availableCount</label>
                         <div class="col-10">
                             <input class="form-control" type="number" th:field="*{availableCount}" id="availableCount">
                             <small class="form-text text-muted text-danger" th:if="${#fields.hasErrors('availableCount')}" th:errors="*{availableCount}"></small>
@@ -69,7 +74,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.imageUrl}" for="title" class="col-2 col-form-label text-right">imageUrl</label>
+                        <label th:text="#{product.imageUrl}" for="imageUrl" class="col-2 col-form-label text-right">imageUrl</label>
                         <div class="col-10">
                             <input class="form-control" type="text" th:field="*{imageUrl}" id="imageUrl">
                             <small class="form-text text-muted text-danger" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></small>
@@ -77,22 +82,31 @@
                     </div>
 
                     <div class="row form-group">
-                        <label th:text="#{product.category}" for="title" class="col-2 col-form-label text-right">category</label>
+                        <label th:text="#{product.category}" for="category" class="col-2 col-form-label text-right">category</label>
                         <div class="col-10">
-                            <select class="chosen-select ec-select my_select_box" th:field="*{category.id}" data-placeholder="Select category">
+                            <select class="chosen-select ec-select my_select_box" th:field="*{category.id}" id="category" data-placeholder="Select category">
                                 <option th:each="c: ${categories}" th:value="${c.id}" th:text="${c.name}">
                                 </option>
                             </select>
                         </div>
                     </div>
 
-
-                    <div class="col-12">
-                        <input type="submit" class="btn btn-primary mx-auto" value="Save" th:value="#{btnSave}">
+                    <div class="row form-group">
+                        <label th:text="#{product.status}" for="status" class="col-2 col-form-label text-right">status</label>
+                        <div class="col-10">
+                            <select class="chosen-select ec-select my_select_box" th:field="*{status}" id="status">
+                                <option value="ACTIVE">Active</option>
+                                <option value="DELETED">Deleted</option>
+                            </select>
+                        </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-10">
+                            <input type="submit" class="btn btn-primary mx-auto" value="Save" th:value="#{btnSave}">
+                        </div>
+                    </div>
                 </form>
-
             </div>
         </div> <!-- END row-->
     </div>

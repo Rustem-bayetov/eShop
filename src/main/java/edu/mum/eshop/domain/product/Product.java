@@ -1,6 +1,7 @@
 package edu.mum.eshop.domain.product;
 
 import edu.mum.eshop.domain.product.Category;
+import edu.mum.eshop.domain.users.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -37,11 +38,19 @@ public class Product {
     @Column(name = "AVAILABLE_COUNT")
     private Integer availableCount;
 
+    @NotNull
+    private ProductStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
     public Product(){
         id = 0;
+        status = ProductStatus.ACTIVE;
     }
 }

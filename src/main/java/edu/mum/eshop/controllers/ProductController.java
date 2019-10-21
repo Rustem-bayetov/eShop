@@ -29,7 +29,7 @@ public class ProductController {
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
         System.out.println(filter);
 
-        model.addAttribute("products", productService.getAll(filter));
+        model.addAttribute("products", productService.getAllProducts(filter));
 
         return "products/index";
     }
@@ -51,7 +51,7 @@ public class ProductController {
     public String myStore(@ModelAttribute("filter") ProductFilter filter, Model model) {
         System.out.println(filter);
 
-        model.addAttribute("products", productService.getAll(filter));
+        model.addAttribute("products", productService.getMyProducts(filter));
 
         return "products/mystore";
     }

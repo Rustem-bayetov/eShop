@@ -6,6 +6,7 @@ import edu.mum.eshop.domain.product.ProductFilter;
 import edu.mum.eshop.repositories.CategoryRepository;
 import edu.mum.eshop.repositories.ProductRepository;
 import edu.mum.eshop.services.ProductService;
+import edu.mum.eshop.services.UsersService;
 import edu.mum.eshop.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,24 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Override
-    public List<Product> getAll(ProductFilter filter) {
+    @Autowired
+    UsersService usersService;
 
-        return Util.iterableToCollection(productRepository.findAll());
+    @Override
+    public List<Product> getAllProducts(ProductFilter filter) {
+
+        return Util.iterableToCollection(productRepository.getAllProducts());
+    }
+
+    @Override
+    public List<Product> getMyProducts(ProductFilter filter) {
+
+        return Util.iterableToCollection(productRepository.getMyProducts(1));
     }
 
     @Override
     public Product save(Product product) {
+        product.setUser(usersService.getUserById(1));
         return productRepository.save(product);
     }
 

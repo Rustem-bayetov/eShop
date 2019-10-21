@@ -7,7 +7,9 @@ import edu.mum.eshop.domain.product.ProductFilter;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAll(ProductFilter filter);
+    List<Product> getAllProducts(ProductFilter filter);
+
+    List<Product> getMyProducts(ProductFilter filter);
 
     Product save(Product product);
 

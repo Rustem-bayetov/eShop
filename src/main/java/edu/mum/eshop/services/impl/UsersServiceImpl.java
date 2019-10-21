@@ -29,4 +29,9 @@ public class UsersServiceImpl implements UsersService {
     public User getUserByEmail(String email) {
         return userRepo.findUserByEmail(email);
     }
+
+    @Override
+    public User getUserById(Integer id) {
+        return userRepo.findById(id).get();
+    }
 }
