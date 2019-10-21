@@ -1,9 +1,9 @@
-<section th:fragment="mainmenu" xmlns:th="http://www.w3.org/1999/xhtml">
+<section th:fragment="mainmenu" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <nav class="ec-nav sticky-top bg-white">
         <div class="container">
             <div class="navbar p-0 navbar-expand-lg">
                 <div class="navbar-brand">
-                    <a class="logo-default" href="index.html"><img alt="" src="assets/img/logo-black.png"></a>
+                    <a class="logo-default" href="index.html"></a>
                 </div>
                 <span aria-expanded="false" class="navbar-toggler ml-auto collapsed" data-target="#ec-nav__collapsible" data-toggle="collapse">
         <div class="hamburger hamburger--spin js-hamburger">
@@ -39,6 +39,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/users/signin"> Sign in </a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/logout}"> Logout </a>
                         </li>
 
                     </ul>

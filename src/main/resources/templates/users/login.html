@@ -1,4 +1,4 @@
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{./fragments/_layout}">
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{./fragments/_layout}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sign in</title>
 </head>
@@ -10,33 +10,36 @@
                     <div class="card shadow-v2">
                         <div class="card-header border-bottom">
                             <h4 class="mt-4">
-                                Log In to Your EchoTheme Account!
+                                User Login!
                             </h4>
                         </div>
                         <div class="card-body">
-                            <form action="#" method="POST" class="px-lg-4">
+                            <form th:action="@{/login}" method="POST" class="px-lg-4">
+                                <div align="center" th:if="${param.error}">
+                                    <p style="font-size: 20px; color: #FF1C19;">Invalid Email or Password!</p>
+                                </div>
                                 <div class="input-group input-group--focus mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white ti-email"></span>
                                     </div>
-                                    <input type="text" class="form-control border-left-0 pl-0" placeholder="Email">
+                                    <input type="text" name="email" class="form-control border-left-0 pl-0" placeholder="Email" />
                                 </div>
                                 <div class="input-group input-group--focus mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-white ti-lock"></span>
                                     </div>
-                                    <input type="password" class="form-control border-left-0 pl-0" placeholder="Password">
+                                    <input type="password" name="password" class="form-control border-left-0 pl-0" placeholder="Password" />
                                 </div>
                                 <div class="d-md-flex justify-content-between my-4">
                                     <label class="ec-checkbox check-sm my-2 clearfix">
-                                        <input type="checkbox" name="checkbox">
+                                        <input type="checkbox" name="remember-me">
                                         <span class="ec-checkbox__control"></span>
                                         <span class="ec-checkbox__lebel">Remember Me</span>
                                     </label>
                                 </div>
-                                <button class="btn btn-block btn-primary">Log In</button>
+                                <button class="btn btn-block btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"></button>
                                 <p class="my-5 text-center">
-                                    Don’t have an account? <a href="/users/signup" class="text-primary">Register</a>
+                                    Don’t have an account? <a th:href="@{/registration}" class="text-primary">Register</a>
                                 </p>
                             </form>
                         </div>

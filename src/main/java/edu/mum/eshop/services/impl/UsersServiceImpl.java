@@ -16,12 +16,17 @@ public class UsersServiceImpl implements UsersService {
     UserRepo userRepo;
 
     @Override
-    public User saveUuyer(User user) {
+    public User saveUser(User user) {
         return userRepo.save(user);
     }
 
     @Override
     public Role getRole(String type) {
         return roleRepo.findByType(type);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findUserByEmail(email);
     }
 }

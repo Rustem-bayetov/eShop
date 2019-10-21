@@ -4,4 +4,5 @@ import edu.mum.eshop.domain.users.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepo extends CrudRepository<User, Integer> {
+    User findUserByEmail(String email);
 }

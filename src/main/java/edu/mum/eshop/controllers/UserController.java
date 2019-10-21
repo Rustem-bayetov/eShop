@@ -5,44 +5,72 @@ import edu.mum.eshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 
 @Controller
 public class UserController {
     @Autowired
-    UsersService buyerService;
+    UsersService usersService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/registration")
-    public String registration(@ModelAttribute("user") User user) {
-        return "login/registration";
+    public String registration(@ModelAttribute("seller") User seller, @ModelAttribute("buyer") User buyer, Model model) {
+        model.addAttribute("userType", "buyer");
+        return "users/registration";
     }
 
     @PostMapping("/buyerRegistration")
-    public String createNewBuyer(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRole(buyerService.getRole("BUYER"));
-        buyerService.saveUuyer(user);
-        return "redirect:/login";
+    public String createNewBuyer(@Valid @ModelAttribute("buyer") User buyer, BindingResult br, Model model) {
+        model.addAttribute("seller", new User());
+        model.addAttribute("userType", "buyer");
+
+        User userExists = usersService.getUserByEmail(buyer.getEmail());
+        if (userExists != null) {
+            br.rejectValue("email", "error.user", "Email already exists!");
+        }
+
+        if (br.hasErrors()){
+            return "users/registration";
+        } else {
+            buyer.setPassword(bCryptPasswordEncoder.encode(buyer.getPassword()));
+            buyer.setActive(true);
+            buyer.setRole(usersService.getRole("BUYER"));
+            usersService.saveUser(buyer);
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/sellerRegistration")
-    public String createNewSeller(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRole(buyerService.getRole("SELLER"));
-        buyerService.saveUuyer(user);
-        return "redirect:/login";
+    public String createNewSeller(@Valid @ModelAttribute("seller") User seller, BindingResult br, Model model) {
+        model.addAttribute("buyer", new User());
+        model.addAttribute("userType", "seller");
+
+        User userExists = usersService.getUserByEmail(seller.getEmail());
+        if (userExists != null) {
+            br.rejectValue("email", "error.user", "Email already exists!");
+        }
+        if (br.hasErrors()){
+            return "users/registration";
+        } else {
+            seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
+            seller.setActive(true);
+            seller.setRole(usersService.getRole("SELLER"));
+            usersService.saveUser(seller);
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/login")
-    public String success(){
-        return "login/login";
+    public String login(){
+        return "users/login";
     }
 }
