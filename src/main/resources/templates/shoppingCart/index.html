@@ -80,7 +80,7 @@
 
         function reloadShoppingCart() {
             $.post('/shoppingcart/getCart', function (data) {
-                console.log(data);
+                // console.log(data);
                 showShoppingCart(data);
             });
         }
@@ -134,7 +134,9 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
+                    NotificationSuccess("Item deleted from your cart")
                     showShoppingCart(data);
+                    showMenuShoppingCart(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseJSON);

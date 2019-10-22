@@ -65,7 +65,7 @@
                                 <span class="ec-touchspin__plus input-group-text ti-plus bg-white"></span>
                             </div>
                         </div>
-                        <button id="btnAddToCart" class="btn btn-primary btn-icon mb-2 mr-3"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
+                        <button id="btnAddToCart" class="btn btn-primary btn-icon mb-2 mr-3 has-spinner"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
                     </div>
                     <ul class="list-inline my-3">
                         <li class="list-inline-item">Payment:</li>
@@ -315,7 +315,7 @@
         });
 
         function addToCart() {
-            console.log("adding to cart...");
+            $("#btnAddToCart").buttonLoader('start');
 
            const data = JSON.stringify({
                productId: $("#productId").val(),
@@ -328,10 +328,16 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
+                    NotificationSuccess("Product successfully added")
+                    reloadMenuShoppingCart();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseJSON);
+                },
+                complete: function() {
+                    $("#btnAddToCart").buttonLoader('stop', 'ti-shopping-cart mr-2');
+
                 }
             });
         }
