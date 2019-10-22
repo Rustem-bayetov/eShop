@@ -1,13 +1,15 @@
 package edu.mum.eshop.services.impl;
-
 import edu.mum.eshop.domain.ads.Ad;
 import edu.mum.eshop.domain.ads.AdRequest;
+import edu.mum.eshop.domain.ads.AdRequestStatus;
+import edu.mum.eshop.domain.ads.Decision;
 import edu.mum.eshop.repositories.ads.AdRepository;
 import edu.mum.eshop.repositories.ads.AdRequestRepository;
 import edu.mum.eshop.services.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +23,6 @@ public class AdServiceImpl implements AdService {
     public Optional<Ad> getAdById(Integer id) {
         return adRepository.findById(id);
     }
-
     @Override
     public Optional<AdRequest> getAdRequestById(Integer id) {
         return adRequestRepository.findById(id);
@@ -53,5 +54,28 @@ public class AdServiceImpl implements AdService {
         return adRequest;
     }
 
+    @Override
+    public List<AdRequest> getAllNoneApprovedAdRequests() {
+        return adRequestRepository.findUnApprovedAdRequests();
+    }
+
+    @Override
+    public Ad decideAdRequest(AdRequest adRequest, Decision decision) {
+        if (decision == Decision.APPROVE) {
+            adRequest.setAdRequestStatus(AdRequestStatus.APPROVED);
+            AdRequest savedAdRequest = adRequestRepository.save(adRequest);
+            Ad ad = new Ad();
+            ad.setProduct(adRequest.getProduct());
+            ad.setAdRequest(adRequest);
+            // save Ad
+            Ad savedAd = adRepository.save(ad);
+            return savedAd;
+        } else if (decision == Decision.REJECT) {
+            adRequest.setAdRequestStatus(AdRequestStatus.REJECTED);
+            AdRequest savedAdRequest = adRequestRepository.save(adRequest);
+            return null;
+        }
+        return null;
+    }
 
 }
