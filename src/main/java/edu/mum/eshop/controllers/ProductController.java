@@ -1,8 +1,10 @@
 package edu.mum.eshop.controllers;
 
+import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
+import edu.mum.eshop.services.AdService;
 import edu.mum.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    AdService adService;
 
     @ModelAttribute("categories")
     public List<Category> categoriesList() {
@@ -84,6 +89,21 @@ public class ProductController {
         product = productService.save(product);
 
         return "redirect:/products/edit/" + product.getId();
+    }
+
+    @PostMapping("/promote/{id}")
+    public @ResponseBody ZenResult promoteProduct(@PathVariable int id) {
+        if (id == 0) return new ZenResult("Please specify product");
+
+        Product product = productService.getById(id);
+        return adService.createAdRequest(product);
+    }
+
+    @PostMapping("/isPromoted/{id}")
+    public @ResponseBody boolean isProductPromoted(@PathVariable int id) {
+        if (id == 0) return false;
+
+        return adService.isAdRequestExists(id);
     }
 
 }

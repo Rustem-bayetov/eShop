@@ -35,6 +35,11 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-4">
+                    <div class="mb-4">
+                        <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-outline-primary mx-1">Edit product</a>
+                        <button id="btnPromote" href="#" th:onclick="'return promoteProduct(' + ${product.id} + ')'" class="btn btn-outline-primary mx-1 has-spinner">Promote product</button>
+                    </div>
+
                     <input type="hidden" id="productId" th:value="${product.id}">
                     <h2 th:text="${product.title}"></h2>
                     <p>seller <a href="#" class="text-dark">Cory Althoff</a></p>
@@ -312,7 +317,26 @@
     <script layout:fragment="scripts">
         $(function () {
             $("#btnAddToCart").on('click', addToCart);
+            checkIfIsPromoted();
         });
+
+        function checkIfIsPromoted() {
+            $.ajax({
+                type: "POST",
+                url: "/products/isPromoted/" + $("#productId").val(),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        $("#btnPromote").attr("disabled", true);
+                        $("#btnPromote").removeClass("btn-outline-primary")
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseJSON);
+                }
+            });
+        }
 
         function addToCart() {
             $("#btnAddToCart").buttonLoader('start');
@@ -340,6 +364,31 @@
 
                 }
             });
+        }
+
+        function promoteProduct(productId) {
+            $("#btnPromote").buttonLoader('start');
+            $.ajax({
+                type: "POST",
+                url: "/products/promote/" + productId,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    $("#btnPromote").buttonLoader('stop');
+                    console.log(data);
+                    if (ProceedResult(data)) {
+                        NotificationSuccess("Product promote request created successfully");
+                        $("#btnPromote").attr("disabled", true);
+                        $("#btnPromote").removeClass("btn-outline-primary")
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("#btnPromote").buttonLoader('stop');
+                    console.log(XMLHttpRequest.responseJSON);
+                }
+            });
+
+            return false;
         }
     </script>
 </body>

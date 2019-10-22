@@ -19,10 +19,12 @@
                        href="page-notice-details.html" th:text="${ad.product.title}">London</a>
                 </div>
             </div>
-            <a class="btn btn-outline-primary" href="#" th:href="@{/ad/{adid}/APPROVE(adid=${ad.id})}"
-               th:text="'Approve'">Approve</a>
-            <a class="btn btn-outline-secondary" href="#" th:href="@{/ad/{adid}/REJECT(adid=${ad.id})}"
-               th:text="'Reject'">Reject</a>
+            <div>
+                <a class="btn btn-outline-primary" href="#" th:href="@{/ad/{adid}/APPROVE(adid=${ad.id})}"
+                   th:text="'Approve'">Approve</a>
+                <a class="btn btn-outline-secondary" href="#" th:href="@{/ad/{adid}/REJECT(adid=${ad.id})}"
+                   th:text="'Reject'">Reject</a>
+            </div>
         </div>
     </div>
 </div>

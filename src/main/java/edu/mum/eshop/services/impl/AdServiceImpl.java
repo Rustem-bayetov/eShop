@@ -1,8 +1,11 @@
 package edu.mum.eshop.services.impl;
+
+import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.ads.Ad;
 import edu.mum.eshop.domain.ads.AdRequest;
 import edu.mum.eshop.domain.ads.AdRequestStatus;
 import edu.mum.eshop.domain.ads.Decision;
+import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.repositories.ads.AdRepository;
 import edu.mum.eshop.repositories.ads.AdRequestRepository;
 import edu.mum.eshop.services.AdService;
@@ -14,21 +17,41 @@ import java.util.Optional;
 
 @Service
 public class AdServiceImpl implements AdService {
-    @Autowired AdRepository adRepository;
-    @Autowired AdRequestRepository adRequestRepository;
-    @Override public Iterable<Ad> getAllAds() { return adRepository.findAll(); }
-    @Override public Ad saveAd(Ad ad) { return adRepository.save(ad); }
+    @Autowired
+    AdRepository adRepository;
+    @Autowired
+    AdRequestRepository adRequestRepository;
+
+
+    @Override
+    public Iterable<Ad> getAllAds() {
+        return adRepository.findAll();
+    }
+
+    @Override
+    public Ad saveAd(Ad ad) {
+        return adRepository.save(ad);
+    }
 
     @Override
     public Optional<Ad> getAdById(Integer id) {
         return adRepository.findById(id);
     }
+
     @Override
     public Optional<AdRequest> getAdRequestById(Integer id) {
         return adRequestRepository.findById(id);
     }
-    @Override public AdRequest saveAdRequest(AdRequest adRequest) { return adRequestRepository.save(adRequest); }
-    @Override public Iterable<AdRequest> getAllAdRequests() { return adRequestRepository.findAll(); }
+
+    @Override
+    public AdRequest saveAdRequest(AdRequest adRequest) {
+        return adRequestRepository.save(adRequest);
+    }
+
+    @Override
+    public Iterable<AdRequest> getAllAdRequests() {
+        return adRequestRepository.findAll();
+    }
 
     @Override
     public Ad approveAdRequestReturnAd(AdRequest adRequest) {
@@ -78,4 +101,29 @@ public class AdServiceImpl implements AdService {
         return null;
     }
 
+
+    @Override
+    public ZenResult createAdRequest(Product product) {
+        if (isAdRequestExists(product.getId())) {
+            return new ZenResult("This product is already promoted");
+        }
+
+        AdRequest request = new AdRequest();
+        request.setProduct(product);
+        request.setAdRequestStatus(AdRequestStatus.CREATED);
+
+        request = adRequestRepository.save(request);
+        ZenResult result = new ZenResult();
+        request.setId(request.getId());
+
+        return result;
+    }
+
+    @Override
+    public boolean isAdRequestExists(Integer productId) {
+        List<AdRequest> existingRequest = adRequestRepository.findAdRequestByProductId(productId);
+
+        return (existingRequest != null && existingRequest.size() > 0);
+
+    }
 }

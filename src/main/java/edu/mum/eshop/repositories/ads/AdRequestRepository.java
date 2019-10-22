@@ -12,4 +12,7 @@ public interface AdRequestRepository extends CrudRepository<AdRequest, Integer> 
     @Query(value = "SELECT * FROM ad_request WHERE ad_request_status = 0", nativeQuery = true)
     List<AdRequest> findUnApprovedAdRequests();
 //    public List<AdRequest> findByAdRequest_AdRequestStatus_Created();
+
+    @Query("select x from AdRequest x where x.adRequestStatus <> 2 and x.product.id = :productId")
+    List<AdRequest> findAdRequestByProductId(Integer productId);
 }
