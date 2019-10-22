@@ -1,8 +1,6 @@
 package edu.mum.eshop.util;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class Util {
     public static <T> List<T> iterableToCollection(Iterable<T> iterable) {
         List<T> collection = new ArrayList<>();
