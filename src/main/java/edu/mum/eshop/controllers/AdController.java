@@ -55,17 +55,4 @@ public class AdController {
         }
         return "/ad/viewaddetails";
     }
-    /*for testing purposes only*/
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    @GetMapping("getcreate")
-//    public String createAd(@ModelAttribute("adRequest") AdRequest adRequest, @ModelAttribute("product") Product product) {
-//        /* insert product validation code when needed */
-//        AdRequest adRequest1 = adService.saveAdRequest(new AdRequest(productService.getById(1), AdRequestStatus.CREATED));
-//        AdRequest adRequest2 = adService.saveAdRequest(new AdRequest(productService.getById(2), AdRequestStatus.APPROVED));
-//        AdRequest adRequest3 = adService.saveAdRequest(new AdRequest(productService.getById(3), AdRequestStatus.REJECTED));
-//        AdRequest approvedAdRequest1 = adService.approveAdRequestReturnAdRequest(adRequest1);
-//        AdRequest approvedAdRequest2 = adService.approveAdRequestReturnAdRequest(adRequest2);
-//        AdRequest approvedAdRequest3 = adService.approveAdRequestReturnAdRequest(adRequest3);
-//        return "redirect:/ad/get";
-//    }
 }
