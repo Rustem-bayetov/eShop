@@ -1,5 +1,6 @@
 package edu.mum.eshop.controllers;
 
+import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.shoppingCart.AddToCartModel;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.services.ShoppingCartService;
@@ -40,6 +41,13 @@ public class ShoppingCartController {
 
     @GetMapping("/checkout")
     public String checkout(){
+
         return "/shoppingCart/checkout";
     }
+
+    @PostMapping("/checkout/doCheckout")
+    public @ResponseBody ZenResult doCheckout() {
+        return shoppingCartService.checkout();
+    }
+
 }

@@ -21,7 +21,7 @@ function showMenuShoppingCart(data) {
             div.append($("<img>").addClass("dropdown-cart__img").attr("src", item.product.imageUrl).attr("alt", item.product.title));
             let divBody = $("<div>").addClass("media-body pl-3");
             divBody.append($("<a>").attr("href", "#").addClass("h6").text(item.product.title));
-            divBody.append($("<span>").addClass("text-primary").text("$" + item.product.price));
+            divBody.append($("<span>").addClass("text-primary").text("$" + item.product.price.toFixed(2)));
             if (item.quantity > 1) {
                 divBody.append($("<span>").addClass("text-secondary").text(" (x" + item.quantity + ")"));
             }
@@ -40,7 +40,7 @@ function showMenuShoppingCart(data) {
     if (itemsCount === 0) {
         menuShoppingCartEmpty();
     } else {
-        let liTotal = `<li class="px-2 py-4 text-center">Subtotal: <span class="text-primary font-weight-semiBold"> $${data.totalSum}</span></li>`;
+        let liTotal = `<li class="px-2 py-4 text-center">Subtotal: <span class="text-primary font-weight-semiBold"> $${data.totalSum.toFixed(2)}</span></li>`;
         $("#shopping-cart").append(liTotal);
 
         let li = $("<li>").addClass("dropdown-cart__item");

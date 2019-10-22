@@ -1,5 +1,6 @@
 package edu.mum.eshop.services;
 
+import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 
 public interface ShoppingCartService {
@@ -10,4 +11,5 @@ public interface ShoppingCartService {
 
     ShoppingCart deleteFromCart(Integer productId);
 
+    ZenResult checkout();
 }

@@ -105,9 +105,9 @@
                             .append($("<img>").attr("src", item.product.imageUrl)))
                         .append($("<a>").attr("href", "/products/" + item.product.id).text(item.product.title))
                     )
-                    .append($("<td>").text("$" + item.product.price))
+                    .append($("<td>").text("$" + item.product.price.toFixed(2)))
                     .append($("<td>").text(item.quantity))
-                    .append($("<td>").text("$" + (item.product.price * item.quantity)))
+                    .append($("<td>").text("$" + (item.product.price * item.quantity).toFixed(2)))
                     .append($("<td>").addClass("text-center")
                         .append($("<a>").attr("href", "#").attr("onclick", `return deleteFromCart(${item.product.id})`)
                             .append("<i>").addClass("ti-close")))
@@ -118,7 +118,7 @@
             tbody.append($("<tr>")
                 .append($("<td>").attr("colspan", "3").addClass("p-4"))
                 .append($("<td>").attr("colspan", "2").text("Total: ")
-                    .append($("<span>").addClass("font-weight-semiBold font-size-18").text("$" + cart.totalSum)))
+                    .append($("<span>").addClass("font-weight-semiBold font-size-18").text("$" + cart.totalSum.toFixed(2))))
             );
 
             table.append(tbody);

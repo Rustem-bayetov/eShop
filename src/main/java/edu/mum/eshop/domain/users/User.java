@@ -1,6 +1,5 @@
 package edu.mum.eshop.domain.users;
 
-import edu.mum.eshop.domain.PurchaseOrder;
 import edu.mum.eshop.domain.product.Product;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -48,8 +47,8 @@ public class User {
 
     @OneToMany
     private List<Product> products;
-    @OneToMany
-    private List<PurchaseOrder> purchaseOrders;
+    // @OneToMany
+    // private List<PurchaseOrder> purchaseOrders;
 
 }
 
