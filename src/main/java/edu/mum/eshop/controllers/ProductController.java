@@ -15,6 +15,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/products")
+@SessionAttributes("loggedInUser")
+
 public class ProductController {
 
     @Autowired

@@ -43,7 +43,7 @@
                             <a class="nav-link" th:href="@{/login}"> Login </a>
                         </li>
                         <li class="nav-item nav-item__has-dropdown" sec:authorize="isAuthenticated()">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" th:text="${loggedInUser.firstName}"> Profile </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Profile </a>
                             <div class="dropdown-menu">
                                 <ul class="list-unstyled">
                                     <li>

@@ -1,0 +1,149 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{./fragments/_layout}">
+<head>
+    <title>Gadget bay</title>
+</head>
+<body>
+
+    <div layout:fragment="breadcrumb" class="py-5 bg-light-v2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Shoping cart</h2>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end bg-transparent">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/products/}"> Shop</a>
+                        </li>
+                        <li class="breadcrumb-item"> Cart</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section layout:fragment="content" class="padding-y-150">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12">
+                    <div id="divTable" class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Subtotal</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td colspan="5" class="p-4 h-100" style="text-align: center;">
+                                    <img src="/img/loading.gif" height="100">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" class="p-4">
+
+                                </td>
+                                <td colspan="3">
+                                    Total: <span class="font-weight-semiBold font-size-18">$0.00</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- END col-12 -->
+
+                <div class="col-md-6 mt-4">
+                    <a th:href="@{/products/}" class="btn btn-outline-light btn-icon"> <i class="ti-angle-double-left mr-2"></i> Back to shopping</a>
+                </div> <!-- END col-md-6 -->
+                <div class="col-md-6 mt-4 text-right">
+                    <a th:href="@{/shoppingcart/checkout}" class="btn btn-primary ml-3">Checkout</a>
+                </div> <!-- END col-md-6 -->
+            </div> <!-- END row-->
+        </div> <!-- END container-->
+    </section>
+
+    <script layout:fragment="scripts">
+        $(function () {
+            reloadShoppingCart();
+        });
+
+
+        function reloadShoppingCart() {
+            $.post('/shoppingcart/getCart', function (data) {
+                console.log(data);
+                showShoppingCart(data);
+            });
+        }
+
+        function showShoppingCart(cart) {
+            const table = $("<table>").addClass("table table-bordered");
+            const thead = $("<thead>");
+            thead.append($("<tr>")
+                .append($("<th>").attr("scope", "col").text("Product Name"))
+                .append($("<th>").attr("scope", "col").text("Price"))
+                .append($("<th>").attr("scope", "col").text("Quantity"))
+                .append($("<th>").attr("scope", "col").text("Subtotal"))
+                .append($("<th>").attr("scope", "col").text("Action"))
+            );
+            table.append(thead);
+            const tbody = $("<tbody>");
+
+            $.each(cart.items, (i, item)=>{
+                tbody.append($("<tr>")
+                    .append($("<td>").addClass("p-4")
+                        .append($("<span>").addClass("d-inline-block width-7rem border p-3 mr-3")
+                            .append($("<img>").attr("src", item.product.imageUrl)))
+                        .append($("<a>").attr("href", "/products/" + item.product.id).text(item.product.title))
+                    )
+                    .append($("<td>").text("$" + item.product.price))
+                    .append($("<td>").text(item.quantity))
+                    .append($("<td>").text("$" + (item.product.price * item.quantity)))
+                    .append($("<td>").addClass("text-center")
+                        .append($("<a>").attr("href", "#").attr("onclick", `return deleteFromCart(${item.product.id})`)
+                            .append("<i>").addClass("ti-close")))
+                );
+
+            });
+
+            tbody.append($("<tr>")
+                .append($("<td>").attr("colspan", "3").addClass("p-4"))
+                .append($("<td>").attr("colspan", "2").text("Total: ")
+                    .append($("<span>").addClass("font-weight-semiBold font-size-18").text("$" + cart.totalSum)))
+            );
+
+            table.append(tbody);
+
+            $("#divTable").empty();
+            $("#divTable").append(table);
+        }
+
+        function deleteFromCart(productId) {
+            $.ajax({
+                type: "DELETE",
+                url: "/shoppingcart/?productId=" + productId,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    showShoppingCart(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseJSON);
+                }
+            });
+
+            return false;
+        }
+    </script>
+
+</body>
+</html>

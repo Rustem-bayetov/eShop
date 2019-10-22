@@ -30,23 +30,23 @@ public class Product {
     private Integer discount;
 
     @NotEmpty
-    @Column(name = "IMAGE_URL")
+    @Column(name = "image_url")
     private String imageUrl;
 
     @Min(0)
     @NotNull
-    @Column(name = "AVAILABLE_COUNT")
+    @Column(name = "available_count")
     private Integer availableCount;
 
     @NotNull
     private ProductStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Product(){

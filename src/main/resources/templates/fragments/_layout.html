@@ -26,8 +26,12 @@
 <body>
     <div th:replace="fragments/_mainmenu :: mainmenu"></div>
 
+    <div layout:fragment="breadcrumb"></div>
+
     <div layout:fragment="content"></div>
 
     <div th:replace="fragments/_footer :: footer"></div>
+
+    <div layout:fragment="scripts"></div>
 </body>
 </html>

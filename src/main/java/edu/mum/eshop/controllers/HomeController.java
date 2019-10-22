@@ -29,6 +29,7 @@ public class HomeController {
     public String home(Principal principal, Model model) {
         model.addAttribute("loggedInUser", usersService.getUserByEmail(principal.getName()));
 //        System.out.println(usersService.getUserByEmail(principal.getName()));
+
         return "home/index";
     }
 

@@ -3,9 +3,7 @@
     <title>Gadget bay</title>
 </head>
 <body>
-    <section layout:fragment="content">
-
-    <div class="py-5 bg-light-v2">
+    <div layout:fragment="breadcrumb" class="py-5 bg-light-v2">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -26,6 +24,8 @@
         </div>
     </div>
 
+    <section layout:fragment="content">
+
     <section class="py-5">
         <div class="container">
             <div class="row">
@@ -35,6 +35,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-4">
+                    <input type="hidden" id="productId" th:value="${product.id}">
                     <h2 th:text="${product.title}"></h2>
                     <p>seller <a href="#" class="text-dark">Cory Althoff</a></p>
                     <ul class="list-inline">
@@ -59,12 +60,12 @@
                             <div class="ec-touchspin__minus input-group-prepend">
                                 <span class="input-group-text ti ti-minus bg-white"></span>
                             </div>
-                            <input class="ec-touchspin__result form-control bg-white text-center" type="text" value="1">
+                            <input id="quantity" class="ec-touchspin__result form-control bg-white text-center" type="text" value="1">
                             <div class="input-group-append">
                                 <span class="ec-touchspin__plus input-group-text ti-plus bg-white"></span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-icon mb-2 mr-3"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
+                        <button id="btnAddToCart" class="btn btn-primary btn-icon mb-2 mr-3"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
                     </div>
                     <ul class="list-inline my-3">
                         <li class="list-inline-item">Payment:</li>
@@ -307,5 +308,33 @@
     </section>
 
     </section>
+
+    <script layout:fragment="scripts">
+        $(function () {
+            $("#btnAddToCart").on('click', addToCart);
+        });
+
+        function addToCart() {
+            console.log("adding to cart...");
+
+           const data = JSON.stringify({
+               productId: $("#productId").val(),
+               quantity: 1
+           });
+
+            $.ajax({
+                type: "PUT",
+                url: "/shoppingcart/?productId=" + $("#productId").val() + "&quantity=" + $("#quantity").val(),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseJSON);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

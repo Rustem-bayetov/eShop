@@ -1,5 +1,6 @@
 package edu.mum.eshop.services.impl;
 
+import edu.mum.eshop.Session;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getMyProducts(ProductFilter filter) {
 
-        return Util.iterableToCollection(productRepository.getMyProducts(1));
+        return Util.iterableToCollection(productRepository.getMyProducts(Session.getMyId()));
     }
 
     @Override
