@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" layout:decorate="~{./fragments/_layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>All dds available</title>
 </head>
-<body>
-
+<body class="container bg-light">
+<div class="container bg-light my-5" layout:fragment="content">
+    <div class="d-md-flex justify-content-between align-items-center bg-white shadow-v1 rounded mb-4 py-4 px-5 hover:transformLeft"
+         th:object="${ad}">
+        <div class="media align-items-center">
+            <div class="text-center border-right pr-4" th:text="${ad.id}">
+                <strong class="text-primary font-size-38">13</strong>
+                <p class="mb-0 text-gray" th:text="${prod.description}">Aug, 2018</p>
+            </div>
+            <div class="media-body p-4">
+                <p class="mb-1 text-gray" th:text="${prod.price}">
+                    <i class="ti-file"></i>Event</p>
+                <a class="h5"
+                   href="page-notice-details.html" th:text="${prod.title}">London</a>
+            </div>
+        </div>
+        <a class="btn btn-outline-primary" href="#" th:href="@{/ad/{adid}/APPROVE(adid=${ad.id})}" th:text="'Approve'">Approve</a>
+        <a class="btn btn-outline-secondary" href="#" th:href="@{/ad/{adid}/REJECT(adid=${ad.id})}" th:text="'Reject'">Reject</a>
+    </div>
+</div>
 </body>
 </html>
