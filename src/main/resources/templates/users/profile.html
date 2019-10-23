@@ -13,7 +13,7 @@
             <div class="col-lg-4 mt-4">
                 <div class="card shadow-v1">
                     <div class="card-header text-center border-bottom pt-5 mb-4">
-                        <img class="rounded-circle mb-4" src="/img/262x230/6.jpg" width="200" height="200" alt="">
+<!--                        <img class="rounded-circle mb-4" src="/img/262x230/6.jpg" width="200" height="200" alt="">-->
                         <h4 th:text="${session.loggedInUser.firstName} + ' ' + ${session.loggedInUser.lastName}">
                             Saju Ahmad
                         </h4>
@@ -233,7 +233,8 @@
                                     </div>
                                 </div>
                                 <hr class="mb-4">
-                                <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Payment</button>
+                                <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Payment
+                                </button>
                                 <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
                                    th:href="@{/profile/payment/delete(id=*{id})}">Remove</a>
                                 </button>
