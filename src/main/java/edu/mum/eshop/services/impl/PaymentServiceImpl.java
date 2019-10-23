@@ -18,7 +18,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment findSPaymentByUserId(Integer id) {
-        return paymentRepo.findSPaymentByUserId(id);
+        return paymentRepo.findPaymentByUserId(id);
     }
 
     @Override
