@@ -15,20 +15,18 @@ public class Messaging {
 
     @Autowired private static JavaMailSender emailSender;
 
-    private static void sendEmail(String to, String subject, String text) {
+    private static void sendEmail(String receiverEmail, String subject, String messageBody) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
+        message.setTo(receiverEmail);
         message.setSubject(subject);
-        message.setText(text);
-        try {
-            emailSender.send(message);
-        }
+        message.setText(messageBody);
+        try { emailSender.send(message); }
         catch (MailException e){
             System.out.println("Mail Exception, Cause: " + e.getCause());
             System.out.println("Mail Exception, Message: "+ e.getMessage());
         }
     }
-
+    /*saved notifications are supposed to be alwyas visible for user in his profile */
     public static Notification send(User receiver, String title, String body, NotificationChannel channel){
         Notification notification = new Notification();
         notification.setBody(body);
@@ -36,21 +34,13 @@ public class Messaging {
         notification.setReceiver(receiver);
         notification.setNotificationStatus(NotificationStatus.CREATED);
         notification.setNotificationChannel(channel);
-        Notification savedNotification = notificationSerivce.save(notification);
-        if(channel == NotificationChannel.WEB){
-            // save to user messages
-
-        }else if(channel == NotificationChannel.BOTH){
-            // send email
+        // if both, send email
+        if(channel == NotificationChannel.BOTH){
             sendEmail(receiver.getEmail(), title, body);
-            // save web notification copy
-
-        }else if (channel == NotificationChannel.EMAIL){
-            // send email
-            sendEmail(receiver.getEmail(), title, body);
-            // check email status
-
+            notification.setNotificationStatus(NotificationStatus.SENT);
         }
+        //saving web version
+        Notification savedNotification = notificationSerivce.save(notification);
         return savedNotification;
     }
 }
