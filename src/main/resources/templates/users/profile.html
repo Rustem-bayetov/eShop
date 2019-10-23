@@ -14,11 +14,11 @@
                 <div class="card shadow-v1">
                     <div class="card-header text-center border-bottom pt-5 mb-4">
                         <img class="rounded-circle mb-4" src="/img/262x230/6.jpg" width="200" height="200" alt="">
-                        <h4 th:text="${loggedInUser.firstName} + ' ' + ${loggedInUser.lastName}">
-                            Alex Lebby
+                        <h4 th:text="${session.loggedInUser.firstName} + ' ' + ${session.loggedInUser.lastName}">
+                            Saju Ahmad
                         </h4>
                         <p>
-                            Logged in as <span th:text="${loggedInUser.role.type}"></span>
+                            Logged in as <span th:text="${session.loggedInUser.role.type}"></span>
                         </p>
                         <ul class="list-inline mb-0">
                             <li sec:authorize="hasAuthority('BUYER')" class="list-inline-item m-2">
@@ -42,7 +42,7 @@
                         <ul class="list-unstyled">
                             <li class="mb-3">
                                 <span class="d-block">Email address:</span>
-                                <p class="h6" th:text="${loggedInUser.email}"></p>
+                                <p class="h6" th:text="${session.loggedInUser.email}"></p>
                             </li>
                         </ul>
                     </div>
@@ -77,38 +77,34 @@
             </div> <!-- END col-md-4 -->
             <div class="col-lg-8 mt-4">
                 <div class="card shadow-v1 padding-30">
-                    <ul class="nav tab-line tab-line border-bottom mb-4" role="tablist">
+                    <ul class="nav tab-line tab-line border-bottom mb-4" role="tablist" id="tabs">
                         <li class="nav-item">
-                            <a class="nav-link" th:class="${active} != 'true' ?'nav-link active' : 'nav-link'"
+                            <a class="nav-link active"
                                data-toggle="tab" href="#products" role="tab"
                                aria-selected="true">
                                 Products
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:class="${active} == 'true' ?'nav-link active' : 'nav-link'"
+                            <a class="nav-link"
                                data-toggle="tab" href="#addresses" role="tab" aria-selected="true">
                                 Addresses
                             </a>
                         </li>
                         <li class="nav-item">
-                            <!--                            th:class="${payActive} == 'true' ?'nav-link active' : 'nav-link'"-->
                             <a class="nav-link"
                                data-toggle="tab" href="#payment" role="tab" aria-selected="true">
                                 Payment Methods
                             </a>
                         </li>
                     </ul>
-
                     <div class="tab-content">
-                        <div class="tab-pane fade"
-                             th:class="${active} != 'true' ?'tab-pane fade show active' : 'tab-pane fade'" id="products"
-                             role="tabpanel">
+                        <div class="tab-pane fade active" id="products" role="tabpanel">
+                            <!--                            th:class="${active} != 'true' ?'tab-pane fade show active' : 'tab-pane fade'"-->
                         </div> <!-- END tab-pane -->
-                        <div class="tab-pane fade"
-                             th:class="${active} == 'true' ?'tab-pane fade show active' : 'tab-pane fade'"
-                             id="addresses" role="tabpanel">
-                            <form th:object="${shippingAddress}" th:action="@{/saveShipping}" method="POST"
+                        <div class="tab-pane fade" id="addresses" role="tabpanel">
+                            <!--                            th:class="${active} == 'addresses' ?'tab-pane fade show active' : 'tab-pane fade'"-->
+                            <form th:object="${shippingAddress}" th:action="@{/profile/shipping}" method="POST"
                                   class="px-lg-4 mb-xl-5">
                                 <div class="form-group mb-0 align-content-center" style="text-align: center">
                                     <label><h3>Shipping Address</h3></label>
@@ -142,12 +138,15 @@
                                 </div>
                                 <small class="text-danger" th:if="${#fields.hasErrors('zipcode')}"
                                        th:errors="*{zipcode}"></small>
-                                <button class="btn btn-outline-primary float-right" type="submit">Add Address</button>
+                                <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Address
+                                </button>
+                                <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
+                                   th:href="@{/profile/shipping/delete(id=*{id})}">Remove</a>
                             </form>
 
                             <br/>
 
-                            <form th:object="${billingAddress}" th:action="@{/saveBilling}" method="POST"
+                            <form th:object="${billingAddress}" th:action="@{/profile/billing}" method="POST"
                                   class="px-lg-4 mt-5">
                                 <div class="form-group mb-0 align-content-center" style="text-align: center">
                                     <label><h3>Billing Address</h3></label>
@@ -181,14 +180,15 @@
                                 </div>
                                 <small class="text-danger" th:if="${#fields.hasErrors('zipcode')}"
                                        th:errors="*{zipcode}"></small>
-                                <button class="btn btn-outline-primary float-right" type="submit">Add Address</button>
+                                <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Address
+                                </button>
+                                <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
+                                   th:href="@{/profile/billing/delete(id=*{id})}">Remove</a>
                             </form>
                         </div>
-                        <div class="tab-pane fade"
-                             th:class="${active} == 'true' ?'tab-pane fade show active' : 'tab-pane fade'" id="payment"
-                             role="tabpanel">
-
-                            <form th:object="${payment}" th:action="@{/savePayment}" method="POST" class="p-4">
+                        <div class="tab-pane fade" id="payment" role="tabpanel">
+                            <!--                            th:class="${active} == 'payment' ?'tab-pane fade show active' : 'tab-pane fade'"-->
+                            <form th:object="${payment}" th:action="@{/profile/payment}" method="POST" class="p-4 ">
                                 <h4 class="mb-3">Card Type</h4>
                                 <div class="mb-2">
                                     <select class="custom-select d-block w-100" th:field="*{type}">
@@ -196,44 +196,46 @@
                                         <option value="Debit">Debit</option>
                                     </select>
                                 </div>
+                                <small class="text-danger" th:if="${#fields.hasErrors('type')}"
+                                       th:errors="*{type}"></small>
 
                                 <hr class="mb-4">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="cc-name">Name on card</label>
                                         <input type="text" class="form-control" id="cc-name" th:field="*{cardName}">
-                                        <small class="text-muted">Full name as displayed on card</small>
-                                        <div class="invalid-feedback">
-                                            Name on card is required
-                                        </div>
+                                        <small class="text-danger" th:if="${#fields.hasErrors('cardName')}"
+                                               th:errors="*{cardName}"></small>
                                     </div>
+
                                     <div class="col-md-6 mb-3">
                                         <label for="cc-number">Credit card number</label>
                                         <input type="text" class="form-control" id="cc-number" th:field="*{cardNumber}">
-                                        <div class="invalid-feedback">
-                                            Credit card number is required
-                                        </div>
+                                        <small class="text-danger" th:if="${#fields.hasErrors('cardNumber')}"
+                                               th:errors="*{cardNumber}"></small>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 mb-3">
                                         <label for="cc-expiration">Expiration</label>
-                                        <input type="text" class="form-control" id="cc-expiration" th:field="*{expiration}">
-                                        <div class="invalid-feedback">
-                                            Expiration date required
-                                        </div>
+                                        <input type="text" class="form-control" id="cc-expiration"
+                                               th:field="*{expiration}">
+                                        <small class="text-danger" th:if="${#fields.hasErrors('expiration')}"
+                                               th:errors="*{expiration}"></small>
                                     </div>
+
                                     <div class="col-md-3 mb-3">
                                         <label for="cc-cvv">CVV</label>
                                         <input type="text" class="form-control" id="cc-cvv" th:field="*{cvv}">
-                                        <div class="invalid-feedback">
-                                            Security code required
-                                        </div>
+                                        <small class="text-danger" th:if="${#fields.hasErrors('cvv')}"
+                                               th:errors="*{cvv}"></small>
                                     </div>
                                 </div>
                                 <hr class="mb-4">
-<!--                                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout-->
-                                <button class="btn btn-outline-primary float-right" type="submit">Add Payment</button>
+                                <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Payment</button>
+                                <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
+                                   th:href="@{/profile/payment/delete(id=*{id})}">Remove</a>
                                 </button>
                             </form>
                         </div>
@@ -243,5 +245,16 @@
         </div> <!--END row-->
     </div> <!--END container-->
 </section>
+<select layout:fragment="scripts">
+    <script th:if="${active == 'payment'}">
+        $('#tabs a[href="#payment"]').tab('show')
+    </script>
+    <script th:if="${active == 'addresses'}">
+        $('#tabs a[href="#addresses"]').tab('show')
+    </script>
+    <script th:if="${active == 'products'}">
+        $('#tabs a[href="#products"]').tab('show')
+    </script>
+</select>
 </body>
 </html>

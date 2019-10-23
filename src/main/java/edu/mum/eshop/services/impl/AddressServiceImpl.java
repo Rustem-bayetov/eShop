@@ -23,4 +23,14 @@ public class AddressServiceImpl implements AddressService {
     public Address findBillingAddressByUserId(Integer id) {
         return addressRepo.findBillingAddressByUserId(id);
     }
+
+    @Override
+    public Address findAddressById(Integer id) {
+        return addressRepo.findAddressById(id);
+    }
+
+    @Override
+    public void deleteAddressById(Integer id) {
+        addressRepo.deleteAddressById(id);
+    }
 }
