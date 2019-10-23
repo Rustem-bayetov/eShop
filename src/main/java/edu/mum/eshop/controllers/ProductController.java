@@ -9,6 +9,7 @@ import edu.mum.eshop.domain.product.ProductFilter;
 import edu.mum.eshop.services.AdService;
 import edu.mum.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,8 +37,6 @@ public class ProductController extends BaseController {
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
         // System.out.println(filter);
 
-        System.out.println(getUser());
-
         model.addAttribute("products", productService.getAllProducts(filter));
 
         return "products/index";
@@ -57,8 +56,9 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/mystore")
+    @PreAuthorize("hasAnyAuthority('SELLER')")
     public String myStore(@ModelAttribute("filter") ProductFilter filter, Model model) {
-        System.out.println(filter);
+        // System.out.println(filter);
 
         model.addAttribute("products", productService.getMyProducts(filter));
 
@@ -66,6 +66,7 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAnyAuthority('SELLER')")
     public String editProduct(@PathVariable int id, Model model) {
         System.out.println(id);
 
@@ -81,6 +82,7 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/edit/{id}")
+    @PreAuthorize("hasAnyAuthority('SELLER')")
     public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
         System.out.println(product);
 
@@ -94,6 +96,7 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/promote/{id}")
+    @PreAuthorize("hasAnyAuthority('SELLER')")
     public @ResponseBody ZenResult promoteProduct(@PathVariable int id) {
         if (id == 0) return new ZenResult("Please specify product");
 

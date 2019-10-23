@@ -20,7 +20,7 @@ public class HomeController {
 
     // @Autowired
     // public JavaMailSender emailSender;
-
+    //
     // public void sendSimpleMessage(String to, String subject, String text) throws Exception {
     //     SimpleMailMessage message = new SimpleMailMessage();
     //     message.setTo(to);

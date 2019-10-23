@@ -22,14 +22,8 @@ public class ProductServiceImpl extends BaseService implements ProductService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Autowired
-    UsersService usersService;
-
     @Override
     public List<Product> getAllProducts(ProductFilter filter) {
-
-        System.out.println("from service");
-        System.out.println(getUser());
 
         return Util.iterableToCollection(productRepository.getAllProducts());
     }
@@ -42,17 +36,19 @@ public class ProductServiceImpl extends BaseService implements ProductService {
 
     @Override
     public Product save(Product product) {
-        product.setUser(usersService.getUserById(1));
+        product.setUser(getUser());
         return productRepository.save(product);
     }
 
     @Override
     public Product getById(Integer id) {
+
         return productRepository.findById(id).get();
     }
 
     @Override
     public List<Category> getCategoris() {
+
         return Util.iterableToCollection(categoryRepository.findAll());
     }
 

@@ -53,6 +53,9 @@
                             <div class="dropdown-menu">
                                 <ul class="list-unstyled">
                                     <li>
+                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/products/mystore}"> My store </a>
+                                    </li>
+                                    <li>
                                         <a class="nav-link__list" th:href="@{/profile}"> Profile </a>
                                     </li>
                                     <li>

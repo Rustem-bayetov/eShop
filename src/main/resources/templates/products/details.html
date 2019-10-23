@@ -1,4 +1,4 @@
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{./fragments/_layout}">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" layout:decorate="~{./fragments/_layout}">
 <head>
     <title>Gadget bay</title>
 </head>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-4">
-                    <div class="mb-4">
+                    <div sec:authorize="hasAuthority('SELLER')" th:if="${product.user.id == session.loggedInUser.id}" class="mb-4">
                         <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-outline-primary mx-1">Edit product</a>
                         <button id="btnPromote" href="#" th:onclick="'return promoteProduct(' + ${product.id} + ')'" class="btn btn-outline-primary mx-1 has-spinner">Promote product</button>
                     </div>
