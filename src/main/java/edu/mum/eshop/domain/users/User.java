@@ -1,7 +1,13 @@
 package edu.mum.eshop.domain.users;
 
 import edu.mum.eshop.domain.product.Product;
+import edu.mum.eshop.domain.userinfo.Address;
+import edu.mum.eshop.domain.userinfo.Payment;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -46,9 +52,19 @@ public class User {
     private Role role;
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Product> products;
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<PurchaseOrder> purchaseOrders;
     // @OneToMany
     // private List<PurchaseOrder> purchaseOrders;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    private List<Address> addresses;
+//    @OneToOne
+//    private Payment payment;
 
 }
 

@@ -28,6 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    LoginSuccessHandler loginSuccessHandler;
+
     @Value("${spring.queries.users-query}")
     private String usersQuery;
 
@@ -52,7 +55,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/home").usernameParameter("email").passwordParameter("password")
+                .loginPage("/login").failureUrl("/login?error=true")
+//                .defaultSuccessUrl("/home")
+                .usernameParameter("email").passwordParameter("password")
+                .successHandler(loginSuccessHandler)
                 .and()
                 .logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
