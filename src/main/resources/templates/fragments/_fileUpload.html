@@ -1,0 +1,61 @@
+<section th:fragment="upload" xmlns:th="http://www.thymeleaf.org">
+    <!-- Modal default-->
+    <div class="modal fade" id="modalFileUpload" tabindex="-1" role="dialog" aria-labelledby="modal__Vertically-centered" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">File upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="ti-close font-size-14"></i>
+                    </button>
+                </div>
+                <div class="modal-body py-4">
+                    <input type="hidden" id="fieldId" th:value="${fieldId}">
+                    <input type="hidden" id="imagePreviewId" th:value="${imagePreviewId}">
+
+                    <form method="POST" enctype="multipart/form-data" action="/resources/upload" id="fileForm">
+                        <input type="file" name="file" id="file" class="form-control-file" />
+                    </form>
+                </div>
+                <div class="modal-footer py-4">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" onclick="uploadFile()">Upload image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function uploadFile() {
+            var form = $('#fileForm')[0];
+            var data = new FormData(form);
+
+            jQuery.ajax({
+                url: '/resources/upload',
+                enctype: 'multipart/form-data',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                method: 'POST',
+                success: function (data) {
+                    const fieldId = $("#fieldId").val();
+                    const imagePreviewId = $("#imagePreviewId").val();
+
+                    console.log("fieldId: ", fieldId);
+                    console.log("data: ", data);
+
+                    $("#" + fieldId).val(data);
+                    $("#" + imagePreviewId).attr("src", "/resources/" + data);
+
+                    $('#modalFileUpload').modal('hide');
+
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                }
+            });
+        }
+    </script>
+</section>

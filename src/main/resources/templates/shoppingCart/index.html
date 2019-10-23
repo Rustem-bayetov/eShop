@@ -102,7 +102,7 @@
                 tbody.append($("<tr>")
                     .append($("<td>").addClass("p-4")
                         .append($("<span>").addClass("d-inline-block width-7rem border p-3 mr-3")
-                            .append($("<img>").attr("src", item.product.imageUrl)))
+                            .append($("<img>").attr("src", '/resources/' + item.product.imageUrl)))
                         .append($("<a>").attr("href", "/products/" + item.product.id).text(item.product.title))
                     )
                     .append($("<td>").text("$" + item.product.price.toFixed(2)))

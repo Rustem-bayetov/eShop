@@ -34,7 +34,7 @@
                                 <span th:if="${product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${product.discount} + '%'">-20%</span>
                                 <span th:if="${product.status == T(edu.mum.eshop.domain.product.ProductStatus).DELETED}" class="badge badge-pill badge-danger position-absolute top-20 right-10">Deleted</span>
                                 <div class="card-header">
-                                    <img class="w-100" th:src="${product.imageUrl}" th:alt="${product.title}">
+                                    <img class="w-100" th:src="'/resources/' + ${product.imageUrl}" th:alt="${product.title}">
                                 </div>
                                 <div class="card-body px-3 py-0">
                                     <a th:href="@{'/products/' + ${product.id}}" class="h6" th:text="${product.title}">product title</a>

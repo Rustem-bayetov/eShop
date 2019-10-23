@@ -18,7 +18,7 @@ function showMenuShoppingCart(data) {
         for (const item of data.items) {
             let li = $("<li>").addClass("dropdown-cart__item");
             let div = $("<div>").addClass("media");
-            div.append($("<img>").addClass("dropdown-cart__img").attr("src", item.product.imageUrl).attr("alt", item.product.title));
+            div.append($("<img>").addClass("dropdown-cart__img").attr("src", '/resources/' + item.product.imageUrl).attr("alt", item.product.title));
             let divBody = $("<div>").addClass("media-body pl-3");
             divBody.append($("<a>").attr("href", "#").addClass("h6").text(item.product.title));
             divBody.append($("<span>").addClass("text-primary").text("$" + item.product.price.toFixed(2)));
