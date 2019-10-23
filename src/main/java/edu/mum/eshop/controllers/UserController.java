@@ -1,20 +1,23 @@
 package edu.mum.eshop.controllers;
 
+import edu.mum.eshop.domain.ads.Decision;
+import edu.mum.eshop.domain.product.Product;
+import edu.mum.eshop.domain.review.Review;
 import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
-
+@SessionAttributes("loggedInUser")
 @Controller
 public class UserController {
     @Autowired
@@ -75,10 +78,25 @@ public class UserController {
         return "users/login";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("users/pendingapproval")
     public String getPendingApproval(Model model){
         List<User> users = usersService.getUnApprovedUsers();
         model.addAttribute("users", users);
         return "users/userstoapprovelist";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping("/user/{userid}/{decision}")
+    public String approveReview(@PathVariable("userid") Integer id, @PathVariable("decision") Decision decision, Model model) {
+        User user = usersService.getUserById(id);
+        model.addAttribute("user", user);
+        if (decision == Decision.APPROVE) {
+            System.out.println("Approved");
+            usersService.decideSellerRequest(user, Decision.APPROVE);
+        } else if (decision == Decision.REJECT) {
+            System.out.println("Rejected");
+            usersService.decideSellerRequest(user, Decision.REJECT); }
+        return "redirect:/users/pendingapproval";
     }
 }

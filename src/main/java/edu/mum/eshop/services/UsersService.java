@@ -1,5 +1,7 @@
 package edu.mum.eshop.services;
 
+import edu.mum.eshop.domain.ads.Decision;
+import edu.mum.eshop.domain.review.Review;
 import edu.mum.eshop.domain.users.Role;
 import edu.mum.eshop.domain.users.User;
 
@@ -11,4 +13,5 @@ public interface UsersService {
     public User getUserByEmail(String email);
     public User getUserById(Integer id);
     public List<User> getUnApprovedUsers();
+    User decideSellerRequest(User user, Decision decision);
 }

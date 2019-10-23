@@ -26,6 +26,9 @@
                         <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
                             <a class="nav-link" th:href="@{/review/getall}" th:text="'Reviews'"> </a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                            <a class="nav-link" th:href="@{/users/pendingapproval}" th:text="'Sellers to Approve'"> </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/products/"> Products </a>
                         </li>
