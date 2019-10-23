@@ -1,5 +1,7 @@
 package edu.mum.eshop.services.impl;
 
+import edu.mum.eshop.domain.ads.Decision;
+import edu.mum.eshop.domain.users.RejectedUser;
 import edu.mum.eshop.domain.users.Role;
 import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.domain.users.UserStatus;
@@ -19,6 +21,8 @@ public class UsersServiceImpl extends BaseService implements UsersService {
     RoleRepo roleRepo;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    RejectedUserService rejectedUserService;
 
     @Override
     public User saveUser(User user) {
