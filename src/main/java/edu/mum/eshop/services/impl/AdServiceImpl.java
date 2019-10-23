@@ -9,9 +9,11 @@ import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.repositories.ads.AdRepository;
 import edu.mum.eshop.repositories.ads.AdRequestRepository;
 import edu.mum.eshop.services.AdService;
+import edu.mum.eshop.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +23,6 @@ public class AdServiceImpl implements AdService {
     AdRepository adRepository;
     @Autowired
     AdRequestRepository adRequestRepository;
-
-
     @Override
     public Iterable<Ad> getAllAds() {
         return adRepository.findAll();
@@ -100,30 +100,34 @@ public class AdServiceImpl implements AdService {
         }
         return null;
     }
-
-
-    @Override
-    public ZenResult createAdRequest(Product product) {
+    @Override public ZenResult createAdRequest(Product product) {
         if (isAdRequestExists(product.getId())) {
             return new ZenResult("This product is already promoted");
         }
-
         AdRequest request = new AdRequest();
         request.setProduct(product);
         request.setAdRequestStatus(AdRequestStatus.CREATED);
-
         request = adRequestRepository.save(request);
         ZenResult result = new ZenResult();
         request.setId(request.getId());
-
         return result;
     }
-
-    @Override
-    public boolean isAdRequestExists(Integer productId) {
+    @Override public boolean isAdRequestExists(Integer productId) {
         List<AdRequest> existingRequest = adRequestRepository.findAdRequestByProductId(productId);
-
         return (existingRequest != null && existingRequest.size() > 0);
-
+    }
+    @Override public List<Ad> get3Ads(){
+        List<Ad> allAds = Util.iterableToCollection(adRepository.findAll());
+        if (allAds.size() <= 3) return allAds;
+        else {
+            List<Ad> random3Ads = new ArrayList<>();
+            int size = allAds.size();
+            Long iterator = new Long(0);
+            Long multiplier = Math.round(10 * Math.random());
+            if (size>=multiplier+3)iterator = size - multiplier;
+            else if(size < multiplier) iterator = multiplier -size ;
+            for(int i = 0 ;  i< 3 ; i++) random3Ads.add(allAds.get(iterator.intValue()+i));
+            return random3Ads;
+        }
     }
 }
