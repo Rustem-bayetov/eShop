@@ -62,7 +62,7 @@ public class UserController {
             return "users/registration";
         } else {
             seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
-            seller.setActive(true);
+            seller.setActive(false);
             seller.setRole(usersService.getRole("SELLER"));
             usersService.saveUser(seller);
             return "redirect:/login";

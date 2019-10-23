@@ -8,6 +8,8 @@ import edu.mum.eshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsersServiceImpl implements UsersService {
     @Autowired
@@ -33,5 +35,9 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public User getUserById(Integer id) {
         return userRepo.findById(id).get();
+    }
+    @Override
+    public List<User> getUnApprovedUsers(){
+        return userRepo.getPendingApprovalUsers();
     }
 }
