@@ -118,6 +118,12 @@ public class AdServiceImpl implements AdService {
     }
     @Override public List<Ad> get3Ads(){
         List<Ad> allAds = Util.iterableToCollection(adRepository.findAll());
+        for (int i = 0 ; i < allAds.size() ; i++){
+            if (allAds.get(i).getAdRequest().getAdRequestStatus() == AdRequestStatus.REJECTED) {
+                allAds.remove(i);
+                i--;
+            }
+        }
         if (allAds.size() <= 3) return allAds;
         else {
             List<Ad> random3Ads = new ArrayList<>();
