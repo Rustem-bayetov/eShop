@@ -28,7 +28,6 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JoinTable(name = "addr_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "addr_id"))
     private User user;
 
     private boolean shipping;

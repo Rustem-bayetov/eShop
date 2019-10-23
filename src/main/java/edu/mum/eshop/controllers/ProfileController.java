@@ -1,8 +1,10 @@
 package edu.mum.eshop.controllers;
 
 import edu.mum.eshop.domain.userinfo.Address;
+import edu.mum.eshop.domain.userinfo.Payment;
 import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.services.AddressService;
+import edu.mum.eshop.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,13 +24,15 @@ import javax.validation.Valid;
 public class ProfileController {
     @Autowired
     AddressService addressService;
+    @Autowired
+    PaymentService paymentService;
 
     private User user;
 
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
         user = (User) session.getAttribute("loggedInUser");
-//        model.addAttribute("loggedInUser", user);
+        model.addAttribute("payment", new Payment());
         Address shippingAddress = addressService.findShippingAddressByUserId(user.getId());
         Address billingAddress = addressService.findBillingAddressByUserId(user.getId());
 
@@ -73,6 +77,20 @@ public class ProfileController {
         }
 
         addressService.saveAddress(address);
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/savePayment")
+    public String savePayment(Payment payment, Model model, HttpSession session) {
+        user = (User) session.getAttribute("loggedInUser");
+        payment.setUser(user);
+        model.addAttribute("payActive", "true");
+
+//        if (br.hasErrors()) {
+//            return "users/profile";
+//        }
+
+        paymentService.savePaymentInfo(payment);
         return "redirect:/profile";
     }
 }

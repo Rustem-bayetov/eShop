@@ -54,16 +54,17 @@ public class User {
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Product> products;
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<PurchaseOrder> purchaseOrders;
-    // @OneToMany
-    // private List<PurchaseOrder> purchaseOrders;
+//    @OneToMany
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private List<PurchaseOrder> purchaseOrders;
+//     @OneToMany
+//     private List<PurchaseOrder> purchaseOrders;
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private List<Address> addresses;
-//    @OneToOne
+
+//    @OneToOne(cascade = CascadeType.ALL)
 //    private Payment payment;
 
 }
