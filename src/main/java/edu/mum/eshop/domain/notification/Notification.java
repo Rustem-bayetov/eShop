@@ -14,4 +14,5 @@ public class Notification {
     @ManyToOne @JoinColumn(name = "user_id")
     @NotNull private User receiver;
     @NotNull private NotificationChannel notificationChannel;
+    @NotNull private NotificationStatus notificationStatus;
 }

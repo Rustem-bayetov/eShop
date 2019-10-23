@@ -14,25 +14,7 @@ import java.security.Principal;
 // @SessionAttributes("loggedInUser")
 public class HomeController {
     @Autowired UsersService usersService;
-    @Autowired public JavaMailSender emailSender;
 
-     public void sendSimpleMessage(String to, String subject, String text) throws Exception {
-         SimpleMailMessage message = new SimpleMailMessage();
-         message.setTo(to);
-         message.setSubject(subject);
-         message.setText(text);
-         emailSender.send(message);
-     }
-
-    @GetMapping("/")
-    public String index() {
-        try {
-             sendSimpleMessage("islam.ahmad@gmail.com", "waa Eshop Message", "Hello from my first email integration");
-        }
-        catch (Exception ex){
-        }
-        return "home/index";
-    }
 
     @PreAuthorize("hasAnyAuthority('BUYER', 'SELLER', 'ADMIN')")
     @GetMapping("/home")
