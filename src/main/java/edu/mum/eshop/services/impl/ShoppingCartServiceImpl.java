@@ -1,6 +1,5 @@
 package edu.mum.eshop.services.impl;
 
-import edu.mum.eshop.Session;
 import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.purchaseOrder.OrderCheckout;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartServiceImpl extends BaseService implements ShoppingCartService {
 
     @Autowired
     ShoppingCartRepository shoppingCartRepository;
@@ -33,7 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart getMyShoppingCart() {
-        return shoppingCartRepository.getMyShoppingCart(Session.getMyId());
+        return shoppingCartRepository.getMyShoppingCart(getUserId());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = getMyShoppingCart();
         if (cart == null) {
             cart = new ShoppingCart();
-            cart.setUser(usersService.getUserById(Session.getMyId()));
+            cart.setUser(usersService.getUserById(getUserId()));
             cart.setItems(new ArrayList<>());
         }
 
@@ -58,7 +57,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = getMyShoppingCart();
         if (cart == null) {
             cart = new ShoppingCart();
-            cart.setUser(usersService.getUserById(Session.getMyId()));
+            cart.setUser(usersService.getUserById(getUserId()));
             cart.setItems(new ArrayList<>());
         }
 

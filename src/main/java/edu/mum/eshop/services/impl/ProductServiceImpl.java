@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends BaseService implements ProductService {
     @Autowired
     ProductRepository productRepository;
 
@@ -28,13 +28,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProducts(ProductFilter filter) {
 
+        System.out.println("from service");
+        System.out.println(getUser());
+
         return Util.iterableToCollection(productRepository.getAllProducts());
     }
 
     @Override
     public List<Product> getMyProducts(ProductFilter filter) {
 
-        return Util.iterableToCollection(productRepository.getMyProducts(Session.getMyId()));
+        return Util.iterableToCollection(productRepository.getMyProducts(getUserId()));
     }
 
     @Override

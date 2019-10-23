@@ -5,8 +5,12 @@ import edu.mum.eshop.domain.userinfo.Payment;
 import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.services.AddressService;
 import edu.mum.eshop.services.PaymentService;
+import edu.mum.eshop.services.UsersService;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,17 +28,40 @@ import javax.validation.Valid;
 public class ProfileController {
     @Autowired
     AddressService addressService;
+
     @Autowired
     PaymentService paymentService;
 
-    private User user;
+    @Autowired
+    UsersService usersService;
+
+    @Autowired
+    ObjectFactory<HttpSession> httpSessionFactory;
+
+    private User getUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
+
+        User user =  usersService.getUserByEmail(auth.getName());
+        System.out.println(user);
+
+        return user;
+
+        //
+        // HttpSession session = httpSessionFactory.getObject();
+        // return (User) session.getAttribute("loggedInUser");
+    }
+
+    // public ProfileController(HttpSession session){
+    //     user = (User) session.getAttribute("loggedInUser");
+    // }
 
     @GetMapping("/profile")
-    public String profile(Model model, HttpSession session) {
-        user = (User) session.getAttribute("loggedInUser");
+    public String profile(Model model) {
+
         model.addAttribute("payment", new Payment());
-        Address shippingAddress = addressService.findShippingAddressByUserId(user.getId());
-        Address billingAddress = addressService.findBillingAddressByUserId(user.getId());
+        Address shippingAddress = addressService.findShippingAddressByUserId(getUser().getId());
+        Address billingAddress = addressService.findBillingAddressByUserId(getUser().getId());
 
         if (shippingAddress == null) {
             model.addAttribute("shippingAddress", new Address());
@@ -52,9 +79,8 @@ public class ProfileController {
     }
 
     @PostMapping("/saveBilling")
-    public String saveBilling(@Valid Address address, BindingResult br, Model model, HttpSession session) {
-        user = (User) session.getAttribute("loggedInUser");
-        address.setUser(user);
+    public String saveBilling(@Valid Address address, BindingResult br, Model model) {
+        address.setUser(getUser());
         address.setBilling(true);
         model.addAttribute("active", "true");
 
@@ -66,9 +92,8 @@ public class ProfileController {
     }
 
     @PostMapping("/saveShipping")
-    public String saveShipping(@Valid Address address, BindingResult br, Model model, HttpSession session) {
-        user = (User) session.getAttribute("loggedInUser");
-        address.setUser(user);
+    public String saveShipping(@Valid Address address, BindingResult br, Model model) {
+        address.setUser(getUser());
         address.setShipping(true);
         model.addAttribute("active", "true");
 
@@ -81,9 +106,8 @@ public class ProfileController {
     }
 
     @PostMapping("/savePayment")
-    public String savePayment(Payment payment, Model model, HttpSession session) {
-        user = (User) session.getAttribute("loggedInUser");
-        payment.setUser(user);
+    public String savePayment(Payment payment, Model model) {
+        payment.setUser(getUser());
         model.addAttribute("payActive", "true");
 
 //        if (br.hasErrors()) {

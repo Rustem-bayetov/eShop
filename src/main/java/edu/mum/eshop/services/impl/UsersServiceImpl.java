@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UsersServiceImpl extends BaseService implements UsersService {
     @Autowired
     RoleRepo roleRepo;
     @Autowired
@@ -19,7 +19,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User saveUser(User user) {
-        return userRepo.save(user);
+        User resultUser = userRepo.save(user);
+        clearSessionUsers();
+        return resultUser;
     }
 
     @Override

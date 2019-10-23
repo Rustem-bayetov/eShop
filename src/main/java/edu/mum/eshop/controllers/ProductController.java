@@ -1,5 +1,7 @@
 package edu.mum.eshop.controllers;
 
+import edu.mum.eshop.EshopApplication;
+import edu.mum.eshop.Session;
 import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
@@ -18,8 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/products")
 @SessionAttributes("loggedInUser")
-public class ProductController {
-
+public class ProductController extends BaseController {
     @Autowired
     ProductService productService;
 
@@ -33,7 +34,9 @@ public class ProductController {
 
     @GetMapping("/")
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
-        System.out.println(filter);
+        // System.out.println(filter);
+
+        System.out.println(getUser());
 
         model.addAttribute("products", productService.getAllProducts(filter));
 
