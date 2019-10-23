@@ -15,30 +15,25 @@ import java.security.Principal;
 @Controller
 // @SessionAttributes("loggedInUser")
 public class HomeController {
-    @Autowired
-    UsersService usersService;
+    @Autowired UsersService usersService;
 
-    // @Autowired
-    // public JavaMailSender emailSender;
+     @Autowired public JavaMailSender emailSender;
 
-    // public void sendSimpleMessage(String to, String subject, String text) throws Exception {
-    //     SimpleMailMessage message = new SimpleMailMessage();
-    //     message.setTo(to);
-    //     message.setSubject(subject);
-    //     message.setText(text);
-    //     emailSender.send(message);
-    // }
+     public void sendSimpleMessage(String to, String subject, String text) throws Exception {
+         SimpleMailMessage message = new SimpleMailMessage();
+         message.setTo(to);
+         message.setSubject(subject);
+         message.setText(text);
+         emailSender.send(message);
+     }
 
     @GetMapping("/")
     public String index() {
-
         try {
-            // sendSimpleMessage("rustem.bayetov@gmail.com", "Gadget bay", "Hello");
+             sendSimpleMessage("islam.ahmad@gmail.com", "waa Eshop Message", "Hello from my first email integration");
         }
         catch (Exception ex){
-
         }
-
         return "home/index";
     }
 
