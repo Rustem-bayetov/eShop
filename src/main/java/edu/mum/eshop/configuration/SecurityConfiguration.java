@@ -51,12 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-//                .antMatchers("/home").hasAnyAuthority("BUYER", "SELLER").anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-//                .defaultSuccessUrl("/home")
                 .usernameParameter("email").passwordParameter("password")
                 .successHandler(loginSuccessHandler)
                 .and()
