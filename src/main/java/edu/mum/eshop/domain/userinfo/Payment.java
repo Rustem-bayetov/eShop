@@ -22,7 +22,7 @@ public class Payment {
 //    @Min(19)
 //    @Max(19)
     @NotEmpty
-    @Pattern(regexp="\\d{19}")
+    @Pattern(regexp="\\d{16}")
     private String cardNumber;
 
     @Pattern(regexp = "^[0-3][0-9]/[0-3][0-9]$")

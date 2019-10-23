@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface PaymentRepo extends CrudRepository<Payment, Integer> {
     @Query("select p from Payment p where p.user.id = :id")
-    Payment findSPaymentByUserId(Integer id);
+    Payment findPaymentByUserId(Integer id);
 
     @Query("select p from Payment p where p.id = :id")
     public Payment findPaymentById(Integer id);
