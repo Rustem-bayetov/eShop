@@ -28,5 +28,8 @@ public class ZenResult {
         id = 0;
     }
 
-
+    public void addError(String error){
+        success = false;
+        errors.add(error);
+    }
 }

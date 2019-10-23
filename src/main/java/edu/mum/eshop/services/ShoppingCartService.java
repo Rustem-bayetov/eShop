@@ -7,7 +7,7 @@ public interface ShoppingCartService {
 
     ShoppingCart getMyShoppingCart();
 
-    ShoppingCart addToCart(Integer productId, Integer quantity);
+    ZenResult addToCart(Integer productId, Integer quantity);
 
     ShoppingCart deleteFromCart(Integer productId);
 

@@ -4,6 +4,7 @@ import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.purchaseOrder.OrderCheckout;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
+import edu.mum.eshop.domain.users.UserType;
 import edu.mum.eshop.repositories.OrderCheckoutRepository;
 import edu.mum.eshop.repositories.ShoppingCartRepository;
 import edu.mum.eshop.services.ProductService;
@@ -32,11 +33,25 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
 
     @Override
     public ShoppingCart getMyShoppingCart() {
+
         return shoppingCartRepository.getMyShoppingCart(getUserId());
     }
 
     @Override
-    public ShoppingCart addToCart(Integer productId, Integer quantity) {
+    public ZenResult addToCart(Integer productId, Integer quantity) {
+        ZenResult result = new ZenResult();
+        result.setValue(new ShoppingCart());
+
+        if (!isUserAuthorized()) {
+            result.addError("Please log in to add products to shopping cart");
+            return result;
+        }
+
+        if (!isInRole(UserType.BUYER)) {
+            result.addError("Only users with role BUYER can buy products");
+            return result;
+        }
+
         ShoppingCart cart = getMyShoppingCart();
         if (cart == null) {
             cart = new ShoppingCart();
@@ -49,7 +64,9 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
         item.setQuantity(quantity);
         cart.getItems().add(item);
         cart.setTotalSum(cart.getTotalSum() + item.getProduct().getPrice() * item.getQuantity());
-        return shoppingCartRepository.save(cart);
+        result.setValue(shoppingCartRepository.save(cart));
+
+        return result;
     }
 
     @Override

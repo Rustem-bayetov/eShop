@@ -2,6 +2,7 @@ package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.Session;
 import edu.mum.eshop.domain.users.User;
+import edu.mum.eshop.domain.users.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseService {
@@ -20,4 +21,11 @@ public class BaseService {
         session.clearUsers();
     }
 
+    boolean isUserAuthorized(){
+        return session.isUserAuthorized();
+    }
+
+    boolean isInRole(UserType role){
+        return session.isInRole(role);
+    }
 }

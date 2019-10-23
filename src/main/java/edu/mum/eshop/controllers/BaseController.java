@@ -2,6 +2,7 @@ package edu.mum.eshop.controllers;
 
 import edu.mum.eshop.Session;
 import edu.mum.eshop.domain.users.User;
+import edu.mum.eshop.domain.users.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseController {
@@ -18,5 +19,9 @@ public class BaseController {
 
     void clearSessionUsers(){
         session.clearUsers();
+    }
+
+    boolean isInRole(UserType role) {
+        return session.isInRole(role);
     }
 }

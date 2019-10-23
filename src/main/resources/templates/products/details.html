@@ -352,9 +352,10 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
-                    // console.log(data);
-                    NotificationSuccess("Product successfully added")
-                    reloadMenuShoppingCart();
+                    if (ProceedResult(data)){
+                        NotificationSuccess("Product successfully added")
+                        showMenuShoppingCart(data.value);
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseJSON);
