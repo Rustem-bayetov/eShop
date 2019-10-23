@@ -13,8 +13,8 @@ import java.security.Principal;
 
 @Controller
 public class HomeController {
-    @Autowired
-    UsersService usersService;
+//    @Autowired
+//    UsersService usersService;
 
     @GetMapping("/")
     public String index(){
