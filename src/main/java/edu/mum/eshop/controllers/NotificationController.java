@@ -35,7 +35,7 @@ public class NotificationController extends BaseController{
     }
     @GetMapping("/web")
     public String getMyNotification(Model model){
-        List<Notification> notifications = notificationSerivce.findUnReadByUserId(getUser().getId());
+        List<Notification> notifications = notificationSerivce.findAllByUserId(getUser().getId());
         model.addAttribute("notifications", notifications);
         return "notifications";
     }
