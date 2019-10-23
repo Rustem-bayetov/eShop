@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -74,4 +75,10 @@ public class UserController {
         return "users/login";
     }
 
+    @GetMapping("users/pendingapproval")
+    public String getPendingApproval(Model model){
+        List<User> users = usersService.getUnApprovedUsers();
+        model.addAttribute("users", users);
+        return "users/userstoapprovelist";
+    }
 }
