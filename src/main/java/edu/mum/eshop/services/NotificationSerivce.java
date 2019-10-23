@@ -1,0 +1,10 @@
+package edu.mum.eshop.services;
+
+import edu.mum.eshop.domain.notification.Notification;
+
+import java.util.List;
+
+public interface NotificationSerivce {
+    public Notification save(Notification notification);
+    public List<Notification> findAllByUserId(Integer uid);
+}
