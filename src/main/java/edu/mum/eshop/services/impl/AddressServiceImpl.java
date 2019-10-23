@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
     @Autowired
     AddressRepo addressRepo;
+
     @Override
     public Address saveAddress(Address address) {
         return addressRepo.save(address);
@@ -19,6 +20,7 @@ public class AddressServiceImpl implements AddressService {
     public Address findShippingAddressByUserId(Integer id) {
         return addressRepo.findShippingAddressByUserId(id);
     }
+
     @Override
     public Address findBillingAddressByUserId(Integer id) {
         return addressRepo.findBillingAddressByUserId(id);

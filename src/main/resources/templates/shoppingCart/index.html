@@ -1,6 +1,6 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{./fragments/_layout}">
 <head>
-    <title>Gadget bay</title>
+    <title>Cart</title>
 </head>
 <body>
 
@@ -44,7 +44,7 @@
                             <tbody>
 
                             <tr>
-                                <td colspan="5" class="p-4 h-100" style="text-align: center;">
+                                <td id="tdContent" colspan="5" class="p-4 h-100" style="text-align: center;">
                                     <img src="/img/loading.gif" height="100">
                                 </td>
                             </tr>
@@ -86,6 +86,11 @@
         }
 
         function showShoppingCart(cart) {
+            if (!cart) {
+                $("#tdContent").html("Shopping cart is empty");
+                return;
+            }
+
             const table = $("<table>").addClass("table table-bordered");
             const thead = $("<thead>");
             thead.append($("<tr>")

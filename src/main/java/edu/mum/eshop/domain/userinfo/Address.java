@@ -32,4 +32,9 @@ public class Address {
 
     private boolean shipping;
     private boolean billing;
+
+    @Override
+    public String toString() {
+        return street + ", " + city + ", " + state + ", " + zipcode;
+    }
 }

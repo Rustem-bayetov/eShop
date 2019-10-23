@@ -1,9 +1,14 @@
 package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.classes.ZenResult;
+import edu.mum.eshop.domain.purchaseOrder.OrderAddress;
+import edu.mum.eshop.domain.purchaseOrder.OrderAddressType;
 import edu.mum.eshop.domain.purchaseOrder.OrderCheckout;
+import edu.mum.eshop.domain.purchaseOrder.OrderPaymentMethod;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
+import edu.mum.eshop.domain.userinfo.Address;
+import edu.mum.eshop.domain.userinfo.Payment;
 import edu.mum.eshop.domain.users.UserType;
 import edu.mum.eshop.repositories.OrderCheckoutRepository;
 import edu.mum.eshop.repositories.ShoppingCartRepository;
@@ -94,10 +99,21 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
     }
 
     @Override
-    public ZenResult checkout() {
+    public ZenResult checkout(Address shippingAddress, Address billingAddress, Payment paymentMethod) {
+        if (!isUserAuthorized()) return new ZenResult("Please log in");
+        if (!isInRole(UserType.BUYER)) return new ZenResult("Only users with role BUYER can buy products");
+
+        if (shippingAddress == null) return new ZenResult("Please specify shipping address");
+        if (billingAddress == null) return new ZenResult("Please specify billing address");
+        if (paymentMethod == null) return new ZenResult("Please specify payment method");
+
         ShoppingCart cart = getMyShoppingCart();
+        if (cart == null) return new ZenResult("Please add items to your cart");
 
         OrderCheckout checkout = new OrderCheckout(cart);
+        checkout.setBillingAddress(new OrderAddress(billingAddress, OrderAddressType.BILLING));
+        checkout.setShippingAddress(new OrderAddress(shippingAddress, OrderAddressType.SHIPPING));
+        checkout.setPaymentMethod(new OrderPaymentMethod(paymentMethod));
 
         orderCheckoutRepository.save(checkout);
 
