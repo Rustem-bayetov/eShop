@@ -141,7 +141,7 @@
                                 <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Address
                                 </button>
                                 <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
-                                   th:href="@{/profile/shipping/delete(id=*{id})}">Remove</a>
+                                   th:href="@{/profile/address/delete(id=*{id})}">Remove</a>
                             </form>
 
                             <br/>
@@ -183,7 +183,7 @@
                                 <button class="btn btn-outline-primary float-right ml-3" type="submit">Save Address
                                 </button>
                                 <a th:if="*{id != null}" class="btn btn-outline-primary float-right"
-                                   th:href="@{/profile/billing/delete(id=*{id})}">Remove</a>
+                                   th:href="@{/profile/address/delete(id=*{id})}">Remove</a>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="payment" role="tabpanel">

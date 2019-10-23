@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -32,29 +31,6 @@ public class ProfileController extends BaseController {
         setShipping(model);
         setPayment(model);
         model.addAttribute("active", "products");
-//        Payment payment = paymentService.findSPaymentByUserId(getUser().getId());
-//        Address shippingAddress = addressService.findShippingAddressByUserId(getUser().getId());
-//        Address billingAddress = addressService.findBillingAddressByUserId(getUser().getId());
-//
-//        System.out.println("profile root");
-//        if (payment == null) {
-//            model.addAttribute("payment", new Payment());
-//        } else {
-//            model.addAttribute("payment", payment);
-//        }
-//
-//        if (shippingAddress == null) {
-//            model.addAttribute("shippingAddress", new Address());
-//        } else {
-//            model.addAttribute("shippingAddress", shippingAddress);
-//        }
-//
-//        if (billingAddress == null) {
-//            model.addAttribute("billingAddress", new Address());
-//        } else {
-//            model.addAttribute("billingAddress", billingAddress);
-//        }
-
         return "users/profile";
     }
 
@@ -104,26 +80,35 @@ public class ProfileController extends BaseController {
         return "redirect:/profile/";
     }
 
-    @GetMapping("/shipping/delete")
+    @GetMapping("/address/delete")
     public String deleteShipping(@RequestParam("id") String id){
         Integer addr_id = Integer.parseInt(id);
         Address address = addressService.findAddressById(addr_id);
         System.out.println(address);
+        if (address != null){
+            addressService.deleteAddressById(addr_id);
+        }
         return "redirect:/profile/";
     }
-    @GetMapping("/billing/delete")
-    public String deleteBilling(@RequestParam("id") String id){
-        Integer addr_id = Integer.parseInt(id);
-        Address address = addressService.findAddressById(addr_id);
-        System.out.println(address);
-        return "redirect:/profile/";
-    }
+//    @GetMapping("/billing/delete")
+//    public String deleteBilling(@RequestParam("id") String id){
+//        Integer addr_id = Integer.parseInt(id);
+//        Address address = addressService.findAddressById(addr_id);
+//        System.out.println(address);
+//        if (address != null){
+//            addressService
+//        }
+//        return "redirect:/profile/";
+//    }
 
     @GetMapping("/payment/delete")
     public String deletePayment(@RequestParam("id") String id){
         Integer pay_id = Integer.parseInt(id);
         Payment payment = paymentService.findPaymentById(pay_id);
         System.out.println(payment);
+        if (payment != null) {
+            paymentService.deletePaymentById(pay_id);
+        }
         return "redirect:/profile/";
     }
 

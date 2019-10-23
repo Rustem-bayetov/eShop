@@ -2,9 +2,7 @@ package edu.mum.eshop.configuration;
 
 import edu.mum.eshop.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.repositories.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
