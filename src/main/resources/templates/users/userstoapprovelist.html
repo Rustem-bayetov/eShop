@@ -1,7 +1,7 @@
 <html layout:decorate="~{./fragments/_layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>The Pending Approval List</title>
+    <title>The Pending Approval List of Users</title>
 </head>
 <body class="container bg-light">
 <div class="container bg-light my-5" layout:fragment="content">
@@ -10,13 +10,13 @@
             <div class="media align-items-center">
                 <div class="text-center border-right pr-4" th:text="${user.id}">
                     <strong class="text-primary font-size-38">13</strong>
-                    <p class="mb-0 text-gray" th:text="${user.lastname}">Aug, 2018</p>
+                    <p class="mb-0 text-gray" th:text="${user.id}">Aug, 2018</p>
                 </div>
                 <div class="media-body p-4">
-                    <p class="mb-1 text-gray" th:text="${user.firstname}">
+                    <p class="mb-1 text-gray" th:text="${user.firstName}">
                         <i class="ti-file"></i>Event</p>
                     <a class="h5"
-                       href="page-notice-details.html" th:text="${user.email}">London</a>
+                       href="page-notice-details.html" th:text="${user.lastName}">London</a>
                 </div>
             </div>
             <div>

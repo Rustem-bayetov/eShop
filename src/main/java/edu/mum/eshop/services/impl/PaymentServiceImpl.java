@@ -15,4 +15,19 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment savePaymentInfo(Payment payment) {
         return paymentRepo.save(payment);
     }
+
+    @Override
+    public Payment findSPaymentByUserId(Integer id) {
+        return paymentRepo.findSPaymentByUserId(id);
+    }
+
+    @Override
+    public Payment findPaymentById(Integer id) {
+        return paymentRepo.findPaymentById(id);
+    }
+
+    @Override
+    public void deletePaymentById(Integer id) {
+        paymentRepo.deletePaymentById(id);
+    }
 }

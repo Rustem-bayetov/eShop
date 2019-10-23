@@ -4,6 +4,12 @@ import edu.mum.eshop.domain.userinfo.Address;
 
 public interface AddressService {
     public Address saveAddress(Address address);
+
     public Address findShippingAddressByUserId(Integer id);
     public Address findBillingAddressByUserId(Integer id);
+
+    public Address findAddressById(Integer id);
+
+    public void deleteAddressById(Integer id);
+
 }

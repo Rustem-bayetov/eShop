@@ -2,119 +2,159 @@ package edu.mum.eshop.controllers;
 
 import edu.mum.eshop.domain.userinfo.Address;
 import edu.mum.eshop.domain.userinfo.Payment;
-import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.services.AddressService;
 import edu.mum.eshop.services.PaymentService;
 import edu.mum.eshop.services.UsersService;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes("loggedInUser")
 @PreAuthorize("hasAnyAuthority('BUYER', 'SELLER', 'ADMIN')")
-public class ProfileController {
+@RequestMapping("/profile")
+public class ProfileController extends BaseController {
     @Autowired
     AddressService addressService;
-
     @Autowired
     PaymentService paymentService;
-
     @Autowired
     UsersService usersService;
 
-    @Autowired
-    ObjectFactory<HttpSession> httpSessionFactory;
+    @GetMapping("/")
+    public String profile(Model model) {
+        setBilling(model);
+        setShipping(model);
+        setPayment(model);
+        model.addAttribute("active", "products");
+//        Payment payment = paymentService.findSPaymentByUserId(getUser().getId());
+//        Address shippingAddress = addressService.findShippingAddressByUserId(getUser().getId());
+//        Address billingAddress = addressService.findBillingAddressByUserId(getUser().getId());
+//
+//        System.out.println("profile root");
+//        if (payment == null) {
+//            model.addAttribute("payment", new Payment());
+//        } else {
+//            model.addAttribute("payment", payment);
+//        }
+//
+//        if (shippingAddress == null) {
+//            model.addAttribute("shippingAddress", new Address());
+//        } else {
+//            model.addAttribute("shippingAddress", shippingAddress);
+//        }
+//
+//        if (billingAddress == null) {
+//            model.addAttribute("billingAddress", new Address());
+//        } else {
+//            model.addAttribute("billingAddress", billingAddress);
+//        }
 
-    private User getUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getName());
-
-        User user =  usersService.getUserByEmail(auth.getName());
-        System.out.println(user);
-
-        return user;
-
-        //
-        // HttpSession session = httpSessionFactory.getObject();
-        // return (User) session.getAttribute("loggedInUser");
+        return "users/profile";
     }
 
-    // public ProfileController(HttpSession session){
-    //     user = (User) session.getAttribute("loggedInUser");
-    // }
+    @PostMapping("/billing")
+    public String saveBilling(@Valid @ModelAttribute("billingAddress") Address address, BindingResult br, Model model) {
+        address.setUser(getUser());
+        address.setBilling(true);
+        model.addAttribute("active", "addresses");
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
+        if (br.hasErrors()) {
+            setShipping(model);
+            setPayment(model);
+            return "users/profile";
+        }
+        addressService.saveAddress(address);
+        return "redirect:/profile/";
+    }
 
-        model.addAttribute("payment", new Payment());
-        Address shippingAddress = addressService.findShippingAddressByUserId(getUser().getId());
+    @PostMapping("/shipping")
+    public String saveShipping(@Valid @ModelAttribute("shippingAddress") Address address, BindingResult br, Model model) {
+        address.setUser(getUser());
+        address.setShipping(true);
+        model.addAttribute("active", "addresses");
+
+        if (br.hasErrors()) {
+            setBilling(model);
+            setPayment(model);
+            return "users/profile";
+        }
+
+        addressService.saveAddress(address);
+        return "redirect:/profile/";
+    }
+
+    @PostMapping("/payment")
+    public String savePayment(@Valid Payment payment, BindingResult br, Model model) {
+        payment.setUser(getUser());
+        model.addAttribute("active", "payment");
+
+        if (br.hasErrors()) {
+            setBilling(model);
+            setShipping(model);
+            return "users/profile";
+        }
+
+        paymentService.savePaymentInfo(payment);
+        return "redirect:/profile/";
+    }
+
+    @GetMapping("/shipping/delete")
+    public String deleteShipping(@RequestParam("id") String id){
+        Integer addr_id = Integer.parseInt(id);
+        Address address = addressService.findAddressById(addr_id);
+        System.out.println(address);
+        return "redirect:/profile/";
+    }
+    @GetMapping("/billing/delete")
+    public String deleteBilling(@RequestParam("id") String id){
+        Integer addr_id = Integer.parseInt(id);
+        Address address = addressService.findAddressById(addr_id);
+        System.out.println(address);
+        return "redirect:/profile/";
+    }
+
+    @GetMapping("/payment/delete")
+    public String deletePayment(@RequestParam("id") String id){
+        Integer pay_id = Integer.parseInt(id);
+        Payment payment = paymentService.findPaymentById(pay_id);
+        System.out.println(payment);
+        return "redirect:/profile/";
+    }
+
+
+
+    private void setBilling(Model model) {
         Address billingAddress = addressService.findBillingAddressByUserId(getUser().getId());
+        if (billingAddress == null) {
+            model.addAttribute("billingAddress", new Address());
+        } else {
+            model.addAttribute("billingAddress", billingAddress);
+        }
+    }
+
+    private void setShipping(Model model) {
+        Address shippingAddress = addressService.findShippingAddressByUserId(getUser().getId());
 
         if (shippingAddress == null) {
             model.addAttribute("shippingAddress", new Address());
         } else {
             model.addAttribute("shippingAddress", shippingAddress);
         }
+    }
 
-        if (billingAddress == null) {
-            model.addAttribute("billingAddress", new Address());
+    private void setPayment(Model model) {
+        Payment payment = paymentService.findSPaymentByUserId(getUser().getId());
+
+        if (payment == null) {
+            model.addAttribute("payment", new Payment());
         } else {
-            model.addAttribute("billingAddress", billingAddress);
+            model.addAttribute("payment", payment);
         }
-
-        return "users/profile";
-    }
-
-    @PostMapping("/saveBilling")
-    public String saveBilling(@Valid Address address, BindingResult br, Model model) {
-        address.setUser(getUser());
-        address.setBilling(true);
-        model.addAttribute("active", "true");
-
-        if (br.hasErrors()) {
-            return "users/profile";
-        }
-        addressService.saveAddress(address);
-        return "redirect:/profile";
-    }
-
-    @PostMapping("/saveShipping")
-    public String saveShipping(@Valid Address address, BindingResult br, Model model) {
-        address.setUser(getUser());
-        address.setShipping(true);
-        model.addAttribute("active", "true");
-
-        if (br.hasErrors()) {
-            return "users/profile";
-        }
-
-        addressService.saveAddress(address);
-        return "redirect:/profile";
-    }
-
-    @PostMapping("/savePayment")
-    public String savePayment(Payment payment, Model model) {
-        payment.setUser(getUser());
-        model.addAttribute("payActive", "true");
-
-//        if (br.hasErrors()) {
-//            return "users/profile";
-//        }
-
-        paymentService.savePaymentInfo(payment);
-        return "redirect:/profile";
     }
 }

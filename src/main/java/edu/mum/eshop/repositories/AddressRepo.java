@@ -11,4 +11,10 @@ public interface AddressRepo extends CrudRepository<Address, Integer> {
 
     @Query("select a from Address a where a.user.id = :id and a.billing = true")
     Address findBillingAddressByUserId(Integer id);
+
+    @Query("select a from Address a where a.id = :id")
+    public Address findAddressById(Integer id);
+
+    @Query("delete from Address a where a.id = :id")
+    public void deleteAddressById(Integer id);
 }
