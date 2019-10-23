@@ -33,7 +33,7 @@ public class EshopApplication {
          mailSender.setHost("smtp.gmail.com");
          mailSender.setPort(587);
 
-         mailSender.setUsername("waa.eshop@gmail.com");
+         mailSender.setUsername("adham.pearson@gmail.com");
          mailSender.setPassword("P@ssw0rd@123");
 
          Properties props = mailSender.getJavaMailProperties();

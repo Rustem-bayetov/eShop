@@ -10,4 +10,6 @@ import java.util.List;
 public interface NotificationRepository extends CrudRepository<Notification, Integer> {
     @Query("select n from Notification n where user_id = :uid")
     public List<Notification> findAllByUserId(Integer uid);
+    @Query("select n from Notification n where user_id =:uid  and notification_status <> 4")
+    public List<Notification> findUnReadByUserId(Integer uid);
 }
