@@ -13,5 +13,5 @@ public interface ShoppingCartService {
 
     ShoppingCart deleteFromCart(Integer productId);
 
-    ZenResult checkout(Address shippingAddress, Address billingAddress, Payment paymentMethod);
+    ZenResult checkout(Address shippingAddress, Address billingAddress, Payment paymentMethod, boolean useLoyaltyPoints);
 }

@@ -7,6 +7,7 @@ import edu.mum.eshop.domain.order.OrderStatus;
 import edu.mum.eshop.repositories.OrderCheckoutRepository;
 import edu.mum.eshop.repositories.OrderRepository;
 import edu.mum.eshop.services.OrdersService;
+import edu.mum.eshop.services.UsersService;
 import edu.mum.eshop.util.Util;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class OrdersServiceImpl extends BaseService implements OrdersService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    UsersService usersService;
 
     @Override
     public List<OrderCheckout> getMyCheckouts() {
@@ -80,6 +84,8 @@ public class OrdersServiceImpl extends BaseService implements OrdersService {
         orderItem = orderRepository.save(orderItem);
         result.setValue(orderItem.getStatus());
 
+        // usersService.useLoyaltyPoints(Math.round((float) (orderItem.getQuantity() * orderItem.getProduct().getPrice()) / 100));
+
         return result;
     }
 
@@ -117,8 +123,9 @@ public class OrdersServiceImpl extends BaseService implements OrdersService {
         orderItem = orderRepository.save(orderItem);
         result.setValue(orderItem.getStatus());
 
+        // usersService.useLoyaltyPoints(Math.round((float) (orderItem.getQuantity() * orderItem.getProduct().getPrice()) / 100));
+
         return result;
     }
-
 
 }

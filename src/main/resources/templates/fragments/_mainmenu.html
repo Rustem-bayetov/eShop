@@ -17,18 +17,9 @@
                 <div class="collapse navbar-collapse when-collapsed" id="ec-nav__collapsible">
                     <ul class="nav navbar-nav ec-nav__navbar ml-auto">
 
-<!--                        <li class="nav-item">-->
-<!--                            <a class="nav-link" href="/"> Home </a>-->
-<!--                        </li>-->
-                        <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/ad/get}" th:text="'Ads'"> </a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/review/getall}" th:text="'Reviews'"> </a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/users/pendingapproval}" th:text="'Sellers to Approve'"> </a>
-                        </li>
+                        <!--                        <li class="nav-item">-->
+                        <!--                            <a class="nav-link" href="/"> Home </a>-->
+                        <!--                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link" href="/products/"> Products </a>
                         </li>
@@ -49,15 +40,32 @@
                                     <li>
                                         <a class="nav-link__list" th:href="@{/profile/}"> Profile </a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/products/mystore}"> My store </a>
+
+
+                                    <li sec:authorize="hasAnyAuthority('ADMIN')">
+                                        <a class="nav-link__list" th:href="@{/ad/get}"> Ads</a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/orders/sales}"> My sales </a>
+                                    <li sec:authorize="hasAnyAuthority('ADMIN')">
+                                        <a class="nav-link__list" th:href="@{/review/getall}"> Reviews</a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link__list" sec:authorize="hasAuthority('BUYER')" th:href="@{/orders/my}"> My orders </a>
+                                    <li sec:authorize="hasAnyAuthority('ADMIN')">
+                                        <a class="nav-link__list" th:href="@{/users/pendingapproval}"> Sellers to Approve</a>
                                     </li>
+
+
+                                    <li sec:authorize="hasAuthority('SELLER')">
+                                        <a class="nav-link__list" th:href="@{/products/mystore}"> My store </a>
+                                    </li>
+                                    <li sec:authorize="hasAuthority('SELLER')">
+                                        <a class="nav-link__list" th:href="@{/orders/sales}"> My sales </a>
+                                    </li>
+
+
+                                    <li sec:authorize="hasAuthority('BUYER')">
+                                        <a class="nav-link__list" th:href="@{/orders/my}"> My orders </a>
+                                    </li>
+
+
                                     <li>
                                         <a class="nav-link__list" th:href="@{/notification/web}"> My Notifications </a>
                                     </li>

@@ -1,7 +1,5 @@
 package edu.mum.eshop.controllers;
 
-import edu.mum.eshop.EshopApplication;
-import edu.mum.eshop.Session;
 import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.ads.Ad;
 import edu.mum.eshop.domain.product.Category;
@@ -10,6 +8,7 @@ import edu.mum.eshop.domain.product.ProductFilter;
 import edu.mum.eshop.domain.users.User;
 import edu.mum.eshop.services.AdService;
 import edu.mum.eshop.services.ProductService;
+import edu.mum.eshop.services.ReviewService;
 import edu.mum.eshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,9 +24,18 @@ import java.util.List;
 @RequestMapping("/products")
 @SessionAttributes("loggedInUser")
 public class ProductController extends BaseController {
-    @Autowired ProductService productService;
-    @Autowired AdService adService;
-    @Autowired UsersService usersService ;
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    AdService adService;
+
+    @Autowired
+    UsersService usersService;
+
+    @Autowired
+    ReviewService reviewService;
+
     @ModelAttribute("categories")
     public List<Category> categoriesList() {
         return productService.getCategoris();
@@ -35,7 +43,7 @@ public class ProductController extends BaseController {
 
     @GetMapping("/")
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
-        // System.out.println(filter);
+        System.out.println(filter);
 
 //        System.out.println(getUser());
         List<Ad> ads = adService.get3Ads();
@@ -52,10 +60,14 @@ public class ProductController extends BaseController {
             product = productService.getById(id);
         }
         model.addAttribute("product", product);
-//        System.out.println("is follwoing "+ isFollowing(getUser().getId(), product.getUser().getId()));
-        model.addAttribute("isFollowing", isFollowing(getUser().getId(), product.getUser().getId()));
+        model.addAttribute("reviews", reviewService.getProductReviews(id));
+
+        if (isUserAuthorized()) {
+            model.addAttribute("isFollowing", isFollowing(getUser().getId(), product.getUser().getId()));
+        }
         return "products/details";
     }
+
     @GetMapping("/mystore")
     @PreAuthorize("hasAnyAuthority('SELLER')")
     public String myStore(@ModelAttribute("filter") ProductFilter filter, Model model) {
@@ -68,8 +80,6 @@ public class ProductController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAnyAuthority('SELLER')")
     public String editProduct(@PathVariable int id, Model model) {
-//        System.out.println(id);
-
         Product product = new Product();
 
         if (id > 0) {
@@ -97,7 +107,8 @@ public class ProductController extends BaseController {
 
     @PostMapping("/promote/{id}")
     @PreAuthorize("hasAnyAuthority('SELLER')")
-    public @ResponseBody ZenResult promoteProduct(@PathVariable int id) {
+    public @ResponseBody
+    ZenResult promoteProduct(@PathVariable int id) {
         if (id == 0) return new ZenResult("Please specify product");
 
         Product product = productService.getById(id);
@@ -106,13 +117,14 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/isPromoted/{id}")
-    public @ResponseBody boolean isProductPromoted(@PathVariable int id) {
+    public @ResponseBody
+    boolean isProductPromoted(@PathVariable int id) {
         if (id == 0) return false;
 
         return adService.isAdRequestExists(id);
     }
 
-    public Boolean isFollowing(Integer buyerId, Integer sellerId){
+    public Boolean isFollowing(Integer buyerId, Integer sellerId) {
         User buyer = usersService.getUserById(buyerId);
         User seller = usersService.getUserById(sellerId);
         List<User> followedSellers = buyer.getFollowedSellers();

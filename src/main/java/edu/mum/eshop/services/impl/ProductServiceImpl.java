@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl extends BaseService implements ProductService {
@@ -27,7 +28,13 @@ public class ProductServiceImpl extends BaseService implements ProductService {
     @Override
     public List<Product> getAllProducts(ProductFilter filter) {
 
-        return Util.iterableToCollection(productRepository.getAllProducts());
+        List<Product> products = Util.iterableToCollection(productRepository.getAllProducts());
+
+        if (filter.getCategoryId() != null && filter.getCategoryId() > 0){
+            products = products.stream().filter(x->x.getCategory().getId() == filter.getCategoryId()).collect(Collectors.toList());
+        }
+
+        return products;
     }
 
     @Override

@@ -100,7 +100,7 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
     }
 
     @Override
-    public ZenResult checkout(Address shippingAddress, Address billingAddress, Payment paymentMethod) {
+    public ZenResult checkout(Address shippingAddress, Address billingAddress, Payment paymentMethod, boolean useLoyaltyPoints) {
         if (!isUserAuthorized()) return new ZenResult("Please log in");
         if (!isInRole(UserType.BUYER)) return new ZenResult("Only users with role BUYER can buy products");
 
@@ -127,7 +127,11 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
         checkout.setShippingAddress(new OrderAddress(shippingAddress, OrderAddressType.SHIPPING));
         checkout.setPaymentMethod(new OrderPaymentMethod(paymentMethod));
 
+        if (useLoyaltyPoints) usersService.useLoyaltyPoints(getUser().getLoyaltyPoints());
+
         orderCheckoutRepository.save(checkout);
+
+        usersService.addLoyaltyPoints(Math.round((float) checkout.getTotalSum() / 100));
 
         clearShoppingCart();
 

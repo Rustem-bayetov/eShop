@@ -42,6 +42,18 @@
                             <span th:text="${item.quantity == 1} ? '$' + ${item.product.price} : '$' + ${item.product.price} + ' (x' + ${item.quantity} + ')'" class="text-muted">$0</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
+                            <span th:if="${session.loggedInUser.loyaltyPoints == null || session.loggedInUser.loyaltyPoints == 0}">You have no loyalty points</span>
+                            <div th:if="${session.loggedInUser.loyaltyPoints != null && session.loggedInUser.loyaltyPoints > 0}">
+                                <div class="clearfix">
+                                    <label class="ec-checkbox check-xs mb-3 mr-4">
+                                        <input type="checkbox" id="chbUseLoyaltyPoints">
+                                        <span class="ec-checkbox__control"></span>
+                                        <span class="ec-checkbox__lebel">Use my <span th:text="${session.loggedInUser.loyaltyPoints}"></span> loyalty points</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
                             <span>Total (USD)</span>
                             <strong th:text="'$' + ${cart.totalSum}">$0</strong>
                         </li>
@@ -82,9 +94,16 @@
 
             function placeOrder() {
                 $("#btnPlaceOrder").buttonLoader('start');
+
+                let useLoyaltyPoints = false;
+                const chb = $("#chbUseLoyaltyPoints")[0];
+                if (chb){
+                    useLoyaltyPoints = chb.checked;
+                }
+
                 $.ajax({
                     type: "POST",
-                    url: "/shoppingcart/doCheckout",
+                    url: "/shoppingcart/doCheckout?useLoyaltyPoints=" + useLoyaltyPoints.toString(),
                     contentType: "application/json",
                     dataType: "json",
                     success: function (data) {

@@ -27,297 +27,117 @@
 
     <section layout:fragment="content">
 
-    <section class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 mr-auto mt-4">
-                    <div class="border border-light p-5">
-                        <img class="w-100" th:src="'/resources/' + ${product.imageUrl}" th:alt="${product.title}">
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-4">
-                    <div sec:authorize="hasAuthority('SELLER')" th:if="${product.user.id == session.loggedInUser.id}" class="mb-4">
-                        <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-outline-primary mx-1">Edit product</a>
-                        <button id="btnPromote" href="#" th:onclick="'return promoteProduct(' + ${product.id} + ')'" class="btn btn-outline-primary mx-1 has-spinner">Promote product</button>
-                    </div>
-
-                    <input type="hidden" id="productId" th:value="${product.id}">
-                    <h2 th:text="${product.title}"></h2>
-                    Seller : <div th:text="${product.user.firstName}" th:remove="tag">Seller </div>
-
-
-                    <a href="#" th:if="${!isFollowing}"
-                       class="text-dark" th:href="@{'/user/follow/'+${product.user.id}}">Follow</a>
-                    <a href="#" th:if="${isFollowing}"
-                       class="text-dark" th:href="@{'/user/unfollow/'+${product.user.id}}">Unfollow</a>
-                    <ul class="list-inline">
-                        <li class="list-inline-item">3 customer reviews</li>
-                    </ul>
-                    <h4 th:if="${product.discount} > 0" class="mb-3">
-                        <span class="text-primary" th:text="${#numbers.formatDecimal(product.price - (product.price / 100) * product.discount, 0, 'COMMA', 2, 'POINT')}">$0</span>
-                        <span class="text-gray"><s th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</s></span>
-                    </h4>
-                    <h4 th:if="${product.discount} == 0" class="mb-3">
-                        <span class="text-primary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</span>
-                    </h4>
-                    <p th:if="${product.availableCount > 0}"><i class="fas fa-check-circle text-success mr-2"></i><span th:text="${product.availableCount}"></span> item(s) available on stock</p>
-                    <p th:if="${product.availableCount == 0}"><i class="fas fa-times-circle danger mr-2"></i>Out of stock</p>
-                    <div class="mb-2">
-                        <h4>Description</h4>
-                        <div th:text="${product.description}" class="mt-3"></div>
-                    </div>
-
-                    <div class="d-md-flex">
-                        <div class="input-group ec-touchspin mb-2 mr-3 width-10rem">
-                            <div class="ec-touchspin__minus input-group-prepend">
-                                <span class="input-group-text ti ti-minus bg-white"></span>
-                            </div>
-                            <input id="quantity" class="ec-touchspin__result form-control bg-white text-center" type="text" value="1">
-                            <div class="input-group-append">
-                                <span class="ec-touchspin__plus input-group-text ti-plus bg-white"></span>
-                            </div>
-                        </div>
-                        <button id="btnAddToCart" class="btn btn-primary btn-icon mb-2 mr-3 has-spinner"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
-                    </div>
-                    <ul class="list-inline my-3">
-                        <li class="list-inline-item">Payment:</li>
-                        <li class="list-inline-item"><img src="/img/shop/payment/paypal.jpg" alt=""></li>
-                        <li class="list-inline-item"><img src="/img/shop/payment/mastro.jpg" alt=""></li>
-                        <li class="list-inline-item"><img src="/img/shop/payment/mastercard.jpg" alt=""></li>
-                        <li class="list-inline-item"><img src="/img/shop/payment/visa.jpg" alt=""></li>
-                        <li class="list-inline-item"><img src="/img/shop/payment/ae.jpg" alt=""></li>
-                    </ul>
-                </div>
-            </div> <!-- END row-->
-        </div> <!-- END container-->
-    </section>
-
-    <section class="padding-y-100 bg-light-v2">
-        <div class="container">
-            <div class="list-card p-4 shadow-v1">
-                <div class="col-12">
-                    <h4 class="mb-4">Reviews</h4>
-
-                    <div class="row px-0 align-items-center border p-4">
-                        <div class="col-md-4 text-center">
-                            <h1 class="display-4 text-primary mb-0">
-                                4.70
-                            </h1>
-                            <p class="my-2">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                            <p class="mb-0">
-                                Average Rating
-                            </p>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="width-7rem text-light d-none d-sm-block mr-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </div>
-                                <div class="progress flex-auto mr-3" style="height:10px">
-                                    <div class="progress-bar bg-primary" style="width:100%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
-                                </div>
-                                <span>90%</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="width-7rem text-light d-none d-sm-block mr-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="progress flex-auto mr-3" style="height:10px">
-                                    <div class="progress-bar bg-primary" style="width:80%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
-                                </div>
-                                <span>87%</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="width-7rem text-light d-none d-sm-block mr-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="progress flex-auto mr-3" style="height:10px">
-                                    <div class="progress-bar bg-primary" style="width:60%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
-                                </div>
-                                <span>34%</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="width-7rem text-light d-none d-sm-block mr-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="progress flex-auto mr-3" style="height:10px">
-                                    <div class="progress-bar bg-primary" style="width:40%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
-                                </div>
-                                <span>12%</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="width-7rem text-light d-none d-sm-block mr-3">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="progress flex-auto mr-3" style="height:10px">
-                                    <div class="progress-bar bg-primary" style="width:10%" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100"></div>
-                                </div>
-                                <span>2%</span>
-                            </div>
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 mr-auto mt-4">
+                        <div class="border border-light p-5">
+                            <img class="w-100" th:src="'/resources/' + ${product.imageUrl}" th:alt="${product.title}">
                         </div>
                     </div>
+                    <div class="col-lg-6 mt-4">
+                        <div sec:authorize="hasAuthority('SELLER')" th:if="${product.user.id == session.loggedInUser.id}" class="mb-4">
+                            <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-outline-primary mx-1">Edit product</a>
+                            <button id="btnPromote" href="#" th:onclick="'return promoteProduct(' + ${product.id} + ')'" class="btn btn-outline-primary mx-1 has-spinner">Promote product</button>
+                        </div>
 
-                    <div class="row border-bottom mx-0 py-4 mt-4">
-                        <div class="col-md-4 my-2 media">
-                            <img class="iconbox iconbox-xl" src="assets/img/avatar/4.jpg" alt="">
-                            <div class="media-body ml-4">
-                                <small class="text-gray">7 min ago</small>
-                                <h6>
-                                    Anthony Forsey
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-md-8 my-2">
-                            <p>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                            <p>
-                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty they conctetur they kedadip lectores legee sicing.
-                            </p>
-                        </div>
-                    </div> <!-- END row-->
+                        <input type="hidden" id="productId" th:value="${product.id}">
+                        <h2 th:text="${product.title}"></h2>
+                        Seller :
+                        <div th:text="${product.user.firstName}" th:remove="tag">Seller</div>
 
-                    <div class="row border-bottom mx-0 py-4 mt-4">
-                        <div class="col-md-4 my-2 media">
-                            <img class="iconbox iconbox-xl" src="assets/img/avatar/5.jpg" alt="">
-                            <div class="media-body ml-4">
-                                <small class="text-gray">1 mon ago</small>
-                                <h6>
-                                    Justin Nam
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="col-md-8 my-2">
-                            <p class="text-light">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </p>
-                            <p>
-                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty.
-                            </p>
-                        </div>
-                    </div> <!-- END row-->
 
-                    <div class="row border-bottom mx-0 py-4 mt-4">
-                        <div class="col-md-4 my-2 media">
-                            <div class="iconbox iconbox-xl border">
-                                MD
-                            </div>
-                            <div class="media-body ml-4">
-                                <small class="text-gray">3 Mon ago</small>
-                                <h6>
-                                    Murir Dokan
-                                </h6>
-                            </div>
+                        <div th:if="${isFollowing != null}">
+                            <a href="#" th:if="${!isFollowing}" class="text-dark" th:href="@{'/user/follow/'+${product.user.id}}">Follow</a>
+                            <a href="#" th:if="${isFollowing}" class="text-dark" th:href="@{'/user/unfollow/'+${product.user.id}}">Unfollow</a>
                         </div>
-                        <div class="col-md-8 my-2">
-                            <p>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                            <p>
-                                Investig ationes demons travge vunt lectores legee lrus quodk legunt saepius was claritas kesty they conctetur they kedadip lectores legee sicing.
-                            </p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">3 customer reviews</li>
+                        </ul>
+                        <h4 th:if="${product.discount} > 0" class="mb-3">
+                            <span class="text-primary" th:text="${#numbers.formatDecimal(product.price - (product.price / 100) * product.discount, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                            <span class="text-gray"><s th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</s></span>
+                        </h4>
+                        <h4 th:if="${product.discount} == 0" class="mb-3">
+                            <span class="text-primary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                        </h4>
+                        <p th:if="${product.availableCount > 0}"><i class="fas fa-check-circle text-success mr-2"></i><span th:text="${product.availableCount}"></span> item(s) available on stock</p>
+                        <p th:if="${product.availableCount == 0}"><i class="fas fa-times-circle danger mr-2"></i>Out of stock</p>
+                        <div class="mb-2">
+                            <h4>Description</h4>
+                            <div th:text="${product.description}" class="mt-3"></div>
                         </div>
-                    </div> <!-- END row-->
 
-                    <div class="text-center mt-5">
-                        <a href="#" class="btn btn-primary btn-icon">
-                            <i class="ti-reload mr-2"></i>
-                            Load More
-                        </a>
+                        <div class="d-md-flex">
+                            <div class="input-group ec-touchspin mb-2 mr-3 width-10rem">
+                                <div class="ec-touchspin__minus input-group-prepend">
+                                    <span class="input-group-text ti ti-minus bg-white"></span>
+                                </div>
+                                <input id="quantity" class="ec-touchspin__result form-control bg-white text-center" type="text" value="1">
+                                <div class="input-group-append">
+                                    <span class="ec-touchspin__plus input-group-text ti-plus bg-white"></span>
+                                </div>
+                            </div>
+                            <button id="btnAddToCart" class="btn btn-primary btn-icon mb-2 mr-3 has-spinner"><i class="ti-shopping-cart mr-2"></i> Add to card</button>
+                        </div>
+                        <ul class="list-inline my-3">
+                            <li class="list-inline-item">Payment:</li>
+                            <li class="list-inline-item"><img src="/img/shop/payment/paypal.jpg" alt=""></li>
+                            <li class="list-inline-item"><img src="/img/shop/payment/mastro.jpg" alt=""></li>
+                            <li class="list-inline-item"><img src="/img/shop/payment/mastercard.jpg" alt=""></li>
+                            <li class="list-inline-item"><img src="/img/shop/payment/visa.jpg" alt=""></li>
+                            <li class="list-inline-item"><img src="/img/shop/payment/ae.jpg" alt=""></li>
+                        </ul>
                     </div>
+                </div> <!-- END row-->
+            </div> <!-- END container-->
+        </section>
 
-                    <div class="row mt-5">
-                        <div class="col-12">
-                            <h4>Leave Review</h4>
-                            <ul class="list-inline mt-3">
-                                <li class="list-inline-item">
-                                    Rating
-                                </li>
-                                <li class="list-inline-item">
-                                    <ul class="list-unstyled ec-rating" data-state-class="text-warning">
+        <section class="padding-y-100 bg-light-v2">
+            <div class="container">
+                <div class="list-card p-4 shadow-v1">
+                    <div class="col-12">
+                        <h4 class="mb-4">Reviews</h4>
 
-                                        <li class="text-warning active">
-                                            <i class="fas fa-star"></i>
-                                        </li>
+                        <div th:each="review : ${reviews}">
+                            <div class="row border-bottom mx-0 py-4 mt-4">
+                                <div class="col-md-3 my-2 media">
+                                    <div class="media-body ml-4">
+                                        <h6 th:text="${review.user.firstName + ' ' + review.user.lastName}">User Name</h6>
+                                        <small th:text="${review.reviewDate.toLocaleString()}" class="text-gray">7 min ago</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 my-2">
+                                    <p th:text="${review.body}"></p>
+                                </div>
+                            </div> <!-- END row-->
+                        </div>
 
-                                        <li class="active">
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
+                        <div th:if="${reviews == null || reviews.size() == 0}" class="row border-bottom mx-0 py-4 mt-4 text-center">
+                            <div sec:authorize="isAuthenticated()">
+                                Be the first who leave review for this product
+                            </div>
+                        </div>
 
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
+                        <div sec:authorize="!isAuthenticated()" class="mx-auto py-4 mt-4">
+                            Please log in to leave comment
+                        </div>
 
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div sec:authorize="isAuthenticated()" class="row mt-5" id="divReview">
+                            <div class="col-12">
+                                <h4>Leave Review</h4>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <label>Comment</label>
+                                <textarea class="form-control" rows="3" id="tbxReview"></textarea>
+                                <button id="btnAddReview" class="btn btn-primary mt-4 has-spinner" onclick="addReview()">Publish Review</button>
+                            </div>
                         </div>
-                        <div class="col-md-4 mt-3">
-                            <label>Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-4 mt-3">
-                            <label>Email</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-4 mt-3">
-                            <label>Subject</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-12 mt-3">
-                            <label>Comment</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                            <button class="btn btn-primary mt-4">Publish Review</button>
-                        </div>
-                    </div>
-                </div> <!-- END col-12 -->
-            </div> <!-- END list-card-->
-        </div> <!-- END container-->
-    </section>
+
+                    </div> <!-- END col-12 -->
+                </div> <!-- END list-card-->
+            </div> <!-- END container-->
+        </section>
 
     </section>
 
@@ -348,10 +168,10 @@
         function addToCart() {
             $("#btnAddToCart").buttonLoader('start');
 
-           const data = JSON.stringify({
-               productId: $("#productId").val(),
-               quantity: 1
-           });
+            const data = JSON.stringify({
+                productId: $("#productId").val(),
+                quantity: 1
+            });
 
             $.ajax({
                 type: "PUT",
@@ -359,7 +179,7 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (data) {
-                    if (ProceedResult(data)){
+                    if (ProceedResult(data)) {
                         NotificationSuccess("Product successfully added")
                         showMenuShoppingCart(data.value);
                     }
@@ -367,7 +187,7 @@
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseJSON);
                 },
-                complete: function() {
+                complete: function () {
                     $("#btnAddToCart").buttonLoader('stop', 'ti-shopping-cart mr-2');
 
                 }
@@ -398,6 +218,53 @@
 
             return false;
         }
+
+        function addReview() {
+            $("#btnAddReview").buttonLoader('start');
+            const addReviewModel = {
+                productId: $("#productId").val(),
+                body: $("#tbxReview").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/review/add/",
+                data: JSON.stringify(addReviewModel),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    $("#btnAddReview").buttonLoader('stop');
+                    console.log(data);
+                    if (ProceedResult(data)) {
+                        // NotificationSuccess("Review saved successfully. It will shown after administrator approval.");
+                        // $("#tbxReview").val("");
+                        showReviewSuccess();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("#btnAddReview").buttonLoader('stop');
+                    console.log(XMLHttpRequest.responseJSON);
+                }
+            });
+        }
+
+        function showReviewSuccess() {
+            $("#divReview").empty();
+            const divRoot = $("<div>").addClass("alert border border-success px-4 py-3 alert-dismissible fade show mx-auto").attr("style", "width: 600px").attr("role", "alert");
+            const divInner = $("<div>").addClass("media align-items-center")
+                .append($("<div>").addClass("iconbox iconbox-sm bg-success text-white mr-3").append($("<i>").addClass("ti-heart")))
+                .append($("<div>").addClass("media-body")
+                    .append($("<div>").addClass("d-flex justify-content-between mr-4")
+                        .append($("<strong>").text(" Review saved successfully"))
+                        .append($("<small>").text("A moment ago")))
+                    .append($("<p>").addClass("mb-0").text("It will shown after administrator approval"))
+                );
+            divRoot.append(divInner);
+            divRoot.append($("<button>").addClass("close font-size-14").attr("type", "button").attr("data-dismiss", "alert").attr("aria-label", "Close")
+                .append("<i>").addClass("ti-close"));
+            $("#divReview").append(divRoot);
+        }
+
     </script>
 </body>
 </html>

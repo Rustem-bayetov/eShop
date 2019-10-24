@@ -41,6 +41,11 @@
                                 <span class="d-block">Followed Sellers</span>
                                 <span class="h6" th:text="${session.loggedInUser.followedSellers.isEmpty() }? '0' :${session.loggedInUser.followedSellers.size()}">23</span>
                             </li>
+                            <li sec:authorize="hasAuthority('BUYER')" class="list-inline-item m-2">
+                                <i class="ti-star text-primary"></i>
+                                <span class="d-block">Loyalty points</span>
+                                <span th:text="${session.loggedInUser.loyaltyPoints != null ? session.loggedInUser.loyaltyPoints : 0}" class="h6">0</span>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-body border-bottom">

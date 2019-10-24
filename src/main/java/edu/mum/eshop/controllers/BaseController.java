@@ -24,4 +24,8 @@ public class BaseController {
     boolean isInRole(UserType role) {
         return session.isInRole(role);
     }
+
+    boolean isUserAuthorized(){
+        return session.isUserAuthorized();
+    }
 }

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <button id="pdfbutton">Download PDF</button>
+                <button id="pdfbutton" class="btn btn-primary mb-3">Download PDF</button>
                 <br/>
                 <div class="table-responsive" id="orders">
                     <table class="table table-bordered">
@@ -21,7 +21,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="order: ${orders}">
+                        <tr th:if="${orders != null}" th:each="order: ${orders}">
                             <td th:text="${order.product.title}"></td>
                             <td th:text="${order.product.price}"></td>
                             <td th:text="${order.quantity}"></td>
@@ -31,7 +31,7 @@
                             <td></td>
                             <td></td>
                             <td>Total:</td>
-                            <td th:text="${'$'+total}"></td>
+                            <td th:text="'$' + ${total != null ? total : 0}"></td>
                         </tr>
                         </tbody>
                     </table>

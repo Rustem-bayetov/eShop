@@ -63,11 +63,14 @@ public class ShoppingCartController extends BaseController {
 
     @PostMapping("/doCheckout")
     public @ResponseBody
-    ZenResult doCheckout() {
+    ZenResult doCheckout(@RequestParam boolean useLoyaltyPoints) {
+        System.out.println("use loyalty points: " + useLoyaltyPoints);
+
         return shoppingCartService.checkout(
                 addressService.findShippingAddressByUserId(getUserId()),
                 addressService.findBillingAddressByUserId(getUserId()),
-                paymentService.findSPaymentByUserId(getUserId())
+                paymentService.findSPaymentByUserId(getUserId()),
+                useLoyaltyPoints
         );
     }
 
