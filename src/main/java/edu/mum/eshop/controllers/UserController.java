@@ -105,9 +105,8 @@ public class UserController extends BaseController {
 
     @GetMapping("/user/unfollow/{sellerid}")
     public String unFollowSeller(Model model, @PathVariable("sellerid") Integer sellerid) {
-        User buyer = getUser();
         User seller = usersService.getUserById(sellerid);
-        User savedBuyer = usersService.unFollowSeller(seller, buyer);
+        User savedBuyer = usersService.unFollowSeller(seller, getUser());
         return "redirect:/profile/";
     }
 }

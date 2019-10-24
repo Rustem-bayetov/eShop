@@ -74,8 +74,10 @@ public class UsersServiceImpl extends BaseService implements UsersService {
             List<User> oldList = buyer.getFollowedSellers();
             if (oldList.size() > 0) for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
             buyer.setFollowedSellers(sellers);
+            clearSessionUsers();
             return userRepo.save(buyer);
         } else {
+            clearSessionUsers();
             return buyer;
         }
     }
@@ -86,8 +88,13 @@ public class UsersServiceImpl extends BaseService implements UsersService {
 //            oldList.remove(seller);
 //            System.out.println(oldList);
 //            buyer.setFollowedSellers(oldList);
-        userRepo.unfollowSellerDB(buyer.getId(), seller.getId());
-        System.out.println("followed sellers count " + buyer.getFollowedSellers().size());
+        userRepo.unfollowSellerDB(getUser().getId(), seller.getId());
+        List<User> oldList = getUser().getFollowedSellers();
+        oldList.remove(seller);
+        userRepo.save(getUser());
+        clearSessionUsers();
+        System.out.println("is empty result? " + buyer.getFollowedSellers().isEmpty());
+        System.out.println("followed sellers array size " + getUser().getFollowedSellers().size());
         return buyer;
     }
 
@@ -95,7 +102,6 @@ public class UsersServiceImpl extends BaseService implements UsersService {
     public void addLoyaltyPoints(Integer loyaltyPoints) {
         User user = getUserById(getUserId());
         user.setLoyaltyPoints(user.getLoyaltyPoints() + loyaltyPoints);
-
         userRepo.save(user);
         clearSessionUsers();
     }
@@ -104,7 +110,6 @@ public class UsersServiceImpl extends BaseService implements UsersService {
     public void useLoyaltyPoints(Integer loyaltyPoints) {
         User user = getUserById(getUserId());
         user.setLoyaltyPoints(user.getLoyaltyPoints() - loyaltyPoints);
-
         userRepo.save(user);
         clearSessionUsers();
     }
