@@ -36,6 +36,11 @@
                                 <span class="d-block">Reviews</span>
                                 <span class="h6">10</span>
                             </li>
+                            <li sec:authorize="hasAuthority('BUYER')" class="list-inline-item m-2">
+                                <i class="ti-user text-primary"></i>
+                                <span class="d-block">Followed Sellers</span>
+                                <span class="h6" th:text="${session.loggedInUser.followedSellers.size()}">23</span>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-body border-bottom">
