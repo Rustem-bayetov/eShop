@@ -65,6 +65,7 @@ public class UsersServiceImpl extends BaseService implements UsersService {
         User savedUser = userRepo.save(user);
         return savedUser;
     }
+
     @Override
     public List<User> getSellerFollowers(Integer sellerId){
         return userRepo.getSellerFollowers(sellerId);

@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
-    @Query("select x from Product x where x.status = 0")
+    @Query("select x from Product x where x.status = 0 order by x.id desc ")
     List<Product> getAllProducts();
 
-    @Query("select x from Product x where x.user.id = :userId")
+    @Query("select x from Product x where x.user.id = :userId order by x.id desc ")
     List<Product> getMyProducts(Integer userId);
 
 }

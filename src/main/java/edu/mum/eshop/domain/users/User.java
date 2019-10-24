@@ -1,5 +1,6 @@
 package edu.mum.eshop.domain.users;
 
+import edu.mum.eshop.domain.notification.Notification;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.userinfo.Address;
 import lombok.Data;
@@ -25,9 +26,7 @@ public class User {
         this.loyaltyPoints = 0;
     }
 
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    List<User> followedSellers;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +68,14 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private List<Address> addresses;
+
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<User> followedSellers;
+
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Notification> notifications;
 
 //    @OneToMany
 //    @LazyCollection(LazyCollectionOption.FALSE)

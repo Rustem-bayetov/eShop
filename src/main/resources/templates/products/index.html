@@ -25,7 +25,7 @@
                 <div class="col-md-9">
                     <div class="row">
                         <!--ads begin here-->
-                        <div th:each="ad:${ads}" class="col-lg-4 shadow-success col-md-6 marginTop-30 wow fadeIn">
+                        <div th:each="ad:${ads}" class="col-lg-4 col-md-6 marginTop-30 wow fadeIn">
                             <div class="card text-center height-100p shadow-v1">
                                 <span th:if="${ad.product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${ad.product.discount} + '%'">-20%</span>
                                 <span class="badge badge-pill badge-primary position-absolute top-20 right-10">Promoted</span>

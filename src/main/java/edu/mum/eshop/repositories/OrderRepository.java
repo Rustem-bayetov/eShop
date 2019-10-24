@@ -10,13 +10,13 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<OrderItem, Integer> {
 
-    @Query("select x from OrderItem x where x.product.user.id = :userId")
+    @Query("select x from OrderItem x where x.product.user.id = :userId order by x.id desc ")
     public List<OrderItem> getMySales(Integer userId);
 
-    @Query("select x from OrderItem x where x.checkout.id = :checkoutId")
+    @Query("select x from OrderItem x where x.checkout.id = :checkoutId order by x.id desc ")
     public List<OrderItem> getOrdersForCheckout(Integer checkoutId);
 
-    @Query("select x from OrderItem x where x.status = 2 and x.product.id = :productId and x.checkout.user.id = :userId")
+    @Query("select x from OrderItem x where x.status = 2 and x.product.id = :productId and x.checkout.user.id = :userId order by x.id desc ")
     public List<OrderItem> getMyDeliveredOrdersByProduct(Integer productId, Integer userId);
 
 }

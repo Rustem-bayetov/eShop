@@ -2,28 +2,55 @@
 <head>
     <title>Notifications List</title>
 </head>
-<body class="container bg-light">
-<div class="container bg-light my-5" layout:fragment="content">
-    <div class=" shadow-v1 my-3" th:each="notification:${notifications}">
-        <div class="d-md-flex justify-content-between align-items-center bg-white shadow-v1 rounded mb-4 py-4 px-5 hover:transformLeft">
-            <div class="media align-items-center">
-                <div class="text-center border-right pr-4" th:text="${notification.id}">
-                    <strong class="text-primary font-size-38">13</strong>
-                    <p class="mb-0 text-gray" th:text="${notification.title}">Aug, 2018</p>
+<body>
+    <div layout:fragment="breadcrumb" class="py-5 bg-light-v2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Notifications</h2>
                 </div>
-                <div class="media-body p-4">
-                    <p class="mb-1 text-gray" th:text="${notification.body}">
-                        <i class="ti-file"></i>Event</p>
-                    <a class="h5"
-                       href="page-notice-details.html" th:text="${notification.title}">London</a>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end bg-transparent">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/products/}"> Profile</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            Notifications
+                        </li>
+                    </ol>
                 </div>
-            </div>
-            <div>
-                <a th:if="${notification.NotificationStatus !=  T(edu.mum.eshop.domain.notification.NotificationStatus).READ}" class="btn btn-outline-primary" href="#" th:href="@{/notification/{notificationid}/READ(notificationid=${notification.id})}"
-                   th:text="'Mark As Read'">Mark Read</a>
             </div>
         </div>
     </div>
-</div>
+    <section layout:fragment="content">
+        <div class="container my-5" >
+            <div class="" th:each="notification:${notifications}">
+                <div class="d-md-flex justify-content-between align-items-center bg-white border rounded mb-4 py-4 px-5 hover:transformLeft">
+                    <div class="media align-items-center">
+                        <div class="text-center border-right pr-4" th:text="${notification.id}">
+                            <strong class="text-primary font-size-38">13</strong>
+                            <p class="mb-0 text-gray" th:text="${notification.title}">Aug, 2018</p>
+                        </div>
+                        <div class="media-body p-4">
+                            <p class="mb-1 text-gray" th:text="${notification.body}">
+                                <i class="ti-file"></i>Event</p>
+                            <a class="h5"
+                               href="page-notice-details.html" th:text="${notification.title}">London</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a th:if="${notification.NotificationStatus !=  T(edu.mum.eshop.domain.notification.NotificationStatus).READ}" class="btn btn-outline-primary" href="#" th:href="@{/notification/{notificationid}/READ(notificationid=${notification.id})}"
+                           th:text="'Mark As Read'">Mark Read</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${notifications == null || notifications.size() == 0}" class="shadow-v1 my-4 bg-white border rounded py-4 px-5 hover:transformLeft">
+                No notifications yet
+            </div>
+        </div>
+    </section>
 </body>
 </html>
