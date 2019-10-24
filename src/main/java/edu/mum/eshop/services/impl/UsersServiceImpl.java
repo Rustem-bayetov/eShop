@@ -92,8 +92,8 @@ public class UsersServiceImpl extends BaseService implements UsersService {
     }
 
     @Override
-    public void addLoyaltyPoints(Integer loyaltyPoints) {
-        User user = getUserById(getUserId());
+    public void addLoyaltyPoints(Integer userId, Integer loyaltyPoints) {
+        User user = getUserById(userId);
         user.setLoyaltyPoints(user.getLoyaltyPoints() + loyaltyPoints);
 
         userRepo.save(user);

@@ -131,7 +131,7 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
 
         orderCheckoutRepository.save(checkout);
 
-        usersService.addLoyaltyPoints(Math.round((float) checkout.getTotalSum() / 100));
+        // usersService.addLoyaltyPoints(Math.round((float) checkout.getTotalSum() / 100));
 
         clearShoppingCart();
 

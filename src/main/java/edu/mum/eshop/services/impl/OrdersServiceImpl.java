@@ -105,6 +105,8 @@ public class OrdersServiceImpl extends BaseService implements OrdersService {
         orderItem = orderRepository.save(orderItem);
         result.setValue(orderItem.getStatus());
 
+        usersService.addLoyaltyPoints(orderItem.getCheckout().getUser().getId(), Math.round((float) (orderItem.getQuantity() * orderItem.getProduct().getPrice()) / 100));
+
         return result;
     }
 

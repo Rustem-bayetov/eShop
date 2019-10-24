@@ -23,7 +23,7 @@ public interface UsersService {
 
     User unFollowSeller(User seller, User buyer);
 
-    void addLoyaltyPoints(Integer loyaltyPoints);
+    void addLoyaltyPoints(Integer userId, Integer loyaltyPoints);
 
     void useLoyaltyPoints(Integer loyaltyPoints);
 }
