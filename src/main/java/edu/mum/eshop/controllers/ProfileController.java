@@ -30,7 +30,7 @@ public class ProfileController extends BaseController {
         setBilling(model);
         setShipping(model);
         setPayment(model);
-        model.addAttribute("active", "products");
+        model.addAttribute("active", "addresses");
         return "users/profile";
     }
 
