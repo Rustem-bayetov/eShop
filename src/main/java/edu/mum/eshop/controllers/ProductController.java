@@ -3,6 +3,7 @@ package edu.mum.eshop.controllers;
 import edu.mum.eshop.EshopApplication;
 import edu.mum.eshop.Session;
 import edu.mum.eshop.classes.ZenResult;
+import edu.mum.eshop.domain.ads.Ad;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
@@ -21,11 +22,9 @@ import java.util.List;
 @RequestMapping("/products")
 @SessionAttributes("loggedInUser")
 public class ProductController extends BaseController {
-    @Autowired
-    ProductService productService;
+    @Autowired ProductService productService;
 
-    @Autowired
-    AdService adService;
+    @Autowired AdService adService;
 
     @ModelAttribute("categories")
     public List<Category> categoriesList() {
@@ -35,11 +34,11 @@ public class ProductController extends BaseController {
     @GetMapping("/")
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
         // System.out.println(filter);
-
         System.out.println(getUser());
-
+        List<Ad> ads = adService.get3Ads();
+//        System.out.println(ads);
+        model.addAttribute("ads", ads);
         model.addAttribute("products", productService.getAllProducts(filter));
-
         return "products/index";
     }
 
