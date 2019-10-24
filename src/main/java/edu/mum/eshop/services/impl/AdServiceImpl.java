@@ -121,24 +121,17 @@ public class AdServiceImpl implements AdService {
         List<Ad> allAds = Util.iterableToCollection(adRepository.findAll());
         for (int i = 0 ; i < allAds.size() ; i++){
             if (allAds.get(i).getAdRequest().getAdRequestStatus() == AdRequestStatus.REJECTED) {
-                allAds.remove(i);
-                i--;
-            }
-        }
+                allAds.remove(i);i--; } }
         if (allAds.size() <= 3) return allAds;
-        else {
-            List<Ad> random3Ads = new ArrayList<>();
+        else { List<Ad> random3Ads = new ArrayList<>();
             int size = allAds.size();
             Random random = new Random();
-            int random2 , random3;
-            int random1 = random.ints(0,(size)).findFirst().getAsInt();
+            int random1 ,random2 , random3;
+            random1 = random.ints(0,(size)).findFirst().getAsInt();
             random2 = random.ints(0, (size)).findFirst().getAsInt();
             random3 = random.ints(0, (size)).findFirst().getAsInt();
-            while (random2 == random1) {
-                random2 = random.ints(0, (size)).findFirst().getAsInt(); }
-            while (random3 == random1 && random3 == random2) {
-                random3 = random.ints(0, (size)).findFirst().getAsInt(); }
-
+            while (random2 == random1) { random2 = random.ints(0, (size)).findFirst().getAsInt(); }
+            while (random3 == random1 && random3 == random2) { random3 = random.ints(0, (size)).findFirst().getAsInt(); }
             random3Ads.add(allAds.get(random1));
             random3Ads.add(allAds.get(random2));
             random3Ads.add(allAds.get(random3));

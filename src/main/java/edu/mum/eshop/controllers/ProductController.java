@@ -45,16 +45,12 @@ public class ProductController extends BaseController {
     @GetMapping("/{id}")
     public String details(@PathVariable int id, Model model) {
         Product product = new Product();
-
         if (id > 0) {
             product = productService.getById(id);
         }
-
         model.addAttribute("product", product);
-
         return "products/details";
     }
-
     @GetMapping("/mystore")
     public String myStore(@ModelAttribute("filter") ProductFilter filter, Model model) {
 //        System.out.println(filter);
