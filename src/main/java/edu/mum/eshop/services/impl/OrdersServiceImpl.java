@@ -8,6 +8,7 @@ import edu.mum.eshop.repositories.OrderCheckoutRepository;
 import edu.mum.eshop.repositories.OrderRepository;
 import edu.mum.eshop.services.OrdersService;
 import edu.mum.eshop.util.Util;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,12 @@ public class OrdersServiceImpl extends BaseService implements OrdersService {
 
     @Override
     public OrderCheckout getMyCheckoutById(Integer id) {
-        return orderCheckoutRepository.findById(id).orElse(null);
+        OrderCheckout checkout =  orderCheckoutRepository.findById(id).orElse(null);
+        if (checkout == null) return null;
+
+        if (checkout.getUser().getId() != getUserId()) return null;
+
+        return checkout;
     }
 
     @Override

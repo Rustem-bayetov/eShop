@@ -53,8 +53,9 @@
                     </div>
                 </div>
             </div>
-            <div th:text="'Shipping address: ' + ${checkout.shippingAddress}" class="card-footer border-light text-muted bg-light py-3">
-
+            <div  class="card-footer border-light text-muted bg-light py-3">
+                <div th:text="'Shipping address: ' + ${checkout.shippingAddress}" class="float-left"></div>
+                <div class="float-right"><a th:href="@{/pdf(id=${checkout.id})}" class="btn btn-link p-0">Print receipt</a></div>
             </div>
         </div>
     </section>

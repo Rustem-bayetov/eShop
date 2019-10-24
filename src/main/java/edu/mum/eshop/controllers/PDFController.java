@@ -1,5 +1,6 @@
 package edu.mum.eshop.controllers;
 
+import edu.mum.eshop.domain.order.OrderCheckout;
 import edu.mum.eshop.services.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,8 +18,13 @@ public class PDFController extends BaseController {
     @GetMapping("/pdf")
     public String generatePdf(@RequestParam("id") String id, Model model){
         Integer checkout_id = Integer.parseInt(id);
-        model.addAttribute("orders", ordersService.getMyCheckoutById(checkout_id).getItems());
-        model.addAttribute("total", ordersService.getMyCheckoutById(checkout_id).getTotalSum());
-        return "generatePDF";
+
+        OrderCheckout checkout = ordersService.getMyCheckoutById(checkout_id);
+        if (checkout != null) {
+            model.addAttribute("orders", checkout.getItems());
+            model.addAttribute("total", checkout.getTotalSum());
+        }
+
+        return "pdf/generatePdf";
     }
 }
