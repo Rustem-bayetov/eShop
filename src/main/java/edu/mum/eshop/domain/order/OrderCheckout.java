@@ -4,6 +4,8 @@ import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
 import edu.mum.eshop.domain.users.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -12,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class OrderCheckout {
     public OrderCheckout() {

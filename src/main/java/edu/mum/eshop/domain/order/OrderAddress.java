@@ -34,4 +34,9 @@ public class OrderAddress {
     private String zipcode;
 
     private OrderAddressType addressType;
+
+    @Override
+    public String toString() {
+        return street + ", " + city + ", " + state + ", " + zipcode;
+    }
 }

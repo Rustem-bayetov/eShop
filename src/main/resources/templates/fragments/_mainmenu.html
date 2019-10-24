@@ -56,13 +56,16 @@
                             <div class="dropdown-menu">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/products/mystore}"> My store </a>
-                                    </li>
-                                    <li>
                                         <a class="nav-link__list" th:href="@{/profile/}"> Profile </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link__list" sec:authorize="hasAuthority('BUYER')" th:href="@{/orders/}"> My orders </a>
+                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/products/mystore}"> My store </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link__list" sec:authorize="hasAuthority('SELLER')" th:href="@{/orders/sales}"> My sales </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link__list" sec:authorize="hasAuthority('BUYER')" th:href="@{/orders/my}"> My orders </a>
                                     </li>
                                     <li>
                                         <a class="nav-link__list" th:href="@{/notification/web}"> My Notifications </a>

@@ -96,3 +96,13 @@ function NotificationSuccess(message) {
         }
     }
 })(jQuery);
+
+function getOrderStatusText(status) {
+    if (status == "PLACED")  return "Order placed";
+    if (status == "SHIPPED") return "Item shipped";
+    if (status == "CANCELLED") return "Order cancelled";
+    if (status == "DELIVERED") return "Delivered";
+    if (status == "RETURNED") return "Item returned";
+
+    return status;
+}

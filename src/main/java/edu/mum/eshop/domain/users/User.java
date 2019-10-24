@@ -60,9 +60,9 @@ public class User {
 //     @OneToMany
 //     private List<PurchaseOrder> purchaseOrders;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    private List<Address> addresses;
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @Fetch(FetchMode.JOIN)
+    // private List<Address> addresses;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    private Payment payment;

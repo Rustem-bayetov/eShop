@@ -1,6 +1,8 @@
 package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.Session;
+import edu.mum.eshop.classes.ZenResult;
+import edu.mum.eshop.controllers.ProfileController;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
@@ -52,5 +54,25 @@ public class ProductServiceImpl extends BaseService implements ProductService {
         return Util.iterableToCollection(categoryRepository.findAll());
     }
 
+    @Override
+    public ZenResult checkDecreaseAvailableProductCount(Integer productId, Integer decreaseAmount) {
+        Product product = getById(productId);
+
+        if (product.getAvailableCount() < decreaseAmount) return new ZenResult("Amount of product not enough");
+
+        return new ZenResult();
+    }
+
+    @Override
+    public ZenResult decreaseAvailableProductCount(Integer productId, Integer decreaseAmount){
+        Product product = getById(productId);
+
+        if (product.getAvailableCount() < decreaseAmount) return new ZenResult("Amount of product not enough");
+
+        product.setAvailableCount(product.getAvailableCount() - decreaseAmount);
+        productRepository.save(product);
+
+        return new ZenResult();
+    }
 
 }

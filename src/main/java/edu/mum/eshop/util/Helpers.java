@@ -18,7 +18,7 @@ public class Helpers {
             case CANCELLED:
                 return "Order cancelled";
             case DELIVERED:
-                return "Delivered to you";
+                return "Delivered";
             case RETURNED:
                 return "Item returned";
         }

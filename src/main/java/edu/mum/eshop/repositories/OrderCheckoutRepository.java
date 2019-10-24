@@ -10,5 +10,4 @@ public interface OrderCheckoutRepository extends CrudRepository<OrderCheckout, I
 
     @Query("select x from OrderCheckout x where x.user.id = :userId")
     public List<OrderCheckout> getMyOrders(Integer userId);
-
 }

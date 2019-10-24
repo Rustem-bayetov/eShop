@@ -1,5 +1,6 @@
 package edu.mum.eshop.services;
 
+import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
@@ -16,4 +17,8 @@ public interface ProductService {
     Product getById(Integer id);
 
     List<Category> getCategoris();
+
+    ZenResult checkDecreaseAvailableProductCount(Integer productId, Integer decreaseAmount);
+
+    ZenResult decreaseAvailableProductCount(Integer productId, Integer decreaseAmount);
 }

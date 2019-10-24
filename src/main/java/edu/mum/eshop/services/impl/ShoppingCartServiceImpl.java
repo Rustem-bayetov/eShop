@@ -1,16 +1,14 @@
 package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.classes.ZenResult;
-import edu.mum.eshop.domain.order.OrderAddress;
-import edu.mum.eshop.domain.order.OrderAddressType;
-import edu.mum.eshop.domain.order.OrderCheckout;
-import edu.mum.eshop.domain.order.OrderPaymentMethod;
+import edu.mum.eshop.domain.order.*;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
 import edu.mum.eshop.domain.userinfo.Address;
 import edu.mum.eshop.domain.userinfo.Payment;
 import edu.mum.eshop.domain.users.UserType;
 import edu.mum.eshop.repositories.OrderCheckoutRepository;
+import edu.mum.eshop.repositories.OrderRepository;
 import edu.mum.eshop.repositories.ShoppingCartRepository;
 import edu.mum.eshop.services.ProductService;
 import edu.mum.eshop.services.ShoppingCartService;
@@ -29,6 +27,9 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
 
     @Autowired
     OrderCheckoutRepository orderCheckoutRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
     ProductService productService;
@@ -109,6 +110,17 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
 
         ShoppingCart cart = getMyShoppingCart();
         if (cart == null) return new ZenResult("Please add items to your cart");
+
+        // Decreasing available amount of products
+        for (ShoppingCartItem item : cart.getItems()) {
+            ZenResult checkAmountResult =  productService.checkDecreaseAvailableProductCount(item.getProduct().getId(), item.getQuantity());
+            if (!checkAmountResult.isSuccess()) return checkAmountResult;
+        }
+
+        for (ShoppingCartItem item : cart.getItems()) {
+            ZenResult decreaseAmountResult = productService.decreaseAvailableProductCount(item.getProduct().getId(), item.getQuantity());
+            if (!decreaseAmountResult.isSuccess()) return decreaseAmountResult;
+        }
 
         OrderCheckout checkout = new OrderCheckout(cart);
         checkout.setBillingAddress(new OrderAddress(billingAddress, OrderAddressType.BILLING));
