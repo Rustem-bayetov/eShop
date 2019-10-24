@@ -1,4 +1,5 @@
 package edu.mum.eshop.controllers;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.mum.eshop.domain.ads.Decision;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.review.Review;
@@ -83,6 +84,13 @@ public class UserController extends BaseController {
         User seller = usersService.getUserById(sellerid);
         User savedBuyer = usersService.followSeller(seller, buyer);
 //        model.addAttribute("savedBuyer", savedBuyer);
+        return "redirect:/profile/";
+    }
+    @GetMapping("/user/unfollow/{sellerid}")
+    public String unFollowSeller(Model model, @PathVariable("sellerid") Integer sellerid){
+        User buyer = getUser();
+        User seller = usersService.getUserById(sellerid);
+        User savedBuyer = usersService.unFollowSeller(seller, buyer);
         return "redirect:/profile/";
     }
 }

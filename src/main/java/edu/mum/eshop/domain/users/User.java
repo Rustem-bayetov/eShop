@@ -28,7 +28,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "role_id") private Role role;
     @OneToMany @LazyCollection(LazyCollectionOption.FALSE) private List<Product> products;
     @OneToMany(cascade = CascadeType.ALL) @Fetch(FetchMode.JOIN) private List<Address> addresses;
-    @OneToMany  List<User> followedSellers;
+    @OneToMany @LazyCollection(LazyCollectionOption.FALSE) List<User> followedSellers;
+
 //    @OneToMany
 //    @LazyCollection(LazyCollectionOption.FALSE)
 //    private List<PurchaseOrder> purchaseOrders;

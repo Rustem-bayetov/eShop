@@ -39,7 +39,7 @@
                             <li sec:authorize="hasAuthority('BUYER')" class="list-inline-item m-2">
                                 <i class="ti-user text-primary"></i>
                                 <span class="d-block">Followed Sellers</span>
-                                <span class="h6" th:text="${session.loggedInUser.followedSellers.size()}">23</span>
+                                <span class="h6" th:text="${session.loggedInUser.followedSellers.isEmpty() }? '0' :${session.loggedInUser.followedSellers.size()}">23</span>
                             </li>
                         </ul>
                     </div>

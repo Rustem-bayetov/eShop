@@ -58,8 +58,15 @@ public class UsersServiceImpl extends BaseService implements UsersService {
             if(oldList.size()>0) for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
             buyer.setFollowedSellers(sellers);
             return userRepo.save(buyer);
-        }else {
-            return  buyer;
-        }
+        }else { return  buyer; }
+    }
+    @Override public User unFollowSeller(User seller, User buyer) {
+//            List<User> oldList = buyer.getFollowedSellers();
+//            oldList.remove(seller);
+//            System.out.println(oldList);
+//            buyer.setFollowedSellers(oldList);
+            userRepo.unfollowSellerDB(buyer.getId(), seller.getId());
+        System.out.println("followed sellers count "+ buyer.getFollowedSellers().size());
+            return buyer;
     }
 }

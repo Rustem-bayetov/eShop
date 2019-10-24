@@ -17,6 +17,7 @@
                         <li class="breadcrumb-item">
                             <a th:href="@{/products/}"> Shop</a>
                         </li>
+                        </li>
                         <li class="breadcrumb-item"> Product</li>
                     </ol>
                 </div>
@@ -42,7 +43,13 @@
 
                     <input type="hidden" id="productId" th:value="${product.id}">
                     <h2 th:text="${product.title}"></h2>
-                    <p>seller <a href="#" class="text-dark">Cory Althoff</a></p>
+                    Seller : <div th:text="${product.user.firstName}" th:remove="tag">Seller </div>
+
+
+                    <a href="#" th:if="${!isFollowing}"
+                       class="text-dark" th:href="@{'/user/follow/'+${product.user.id}}">Follow</a>
+                    <a href="#" th:if="${isFollowing}"
+                       class="text-dark" th:href="@{'/user/unfollow/'+${product.user.id}}">Unfollow</a>
                     <ul class="list-inline">
                         <li class="list-inline-item">3 customer reviews</li>
                     </ul>

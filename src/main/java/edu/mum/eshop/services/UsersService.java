@@ -15,4 +15,5 @@ public interface UsersService {
     public List<User> getUnApprovedUsers();
     public User decideSellerRequest(User user, Decision decision);
     public User followSeller(User seller, User buyer);
+    public User unFollowSeller(User seller, User buyer);
 }
