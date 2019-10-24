@@ -13,5 +13,6 @@ public interface UsersService {
     public User getUserByEmail(String email);
     public User getUserById(Integer id);
     public List<User> getUnApprovedUsers();
-    User decideSellerRequest(User user, Decision decision);
+    public User decideSellerRequest(User user, Decision decision);
+    public User followSeller(User seller, User buyer);
 }
