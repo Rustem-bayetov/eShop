@@ -90,16 +90,6 @@ public class ProfileController extends BaseController {
         }
         return "redirect:/profile/";
     }
-//    @GetMapping("/billing/delete")
-//    public String deleteBilling(@RequestParam("id") String id){
-//        Integer addr_id = Integer.parseInt(id);
-//        Address address = addressService.findAddressById(addr_id);
-//        System.out.println(address);
-//        if (address != null){
-//            addressService
-//        }
-//        return "redirect:/profile/";
-//    }
 
     @GetMapping("/payment/delete")
     public String deletePayment(@RequestParam("id") String id){
@@ -111,8 +101,6 @@ public class ProfileController extends BaseController {
         }
         return "redirect:/profile/";
     }
-
-
 
     private void setBilling(Model model) {
         Address billingAddress = addressService.findBillingAddressByUserId(getUser().getId());
@@ -142,4 +130,6 @@ public class ProfileController extends BaseController {
             model.addAttribute("payment", payment);
         }
     }
+
+
 }

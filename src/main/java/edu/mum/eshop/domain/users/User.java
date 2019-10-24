@@ -51,9 +51,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Product> products;
+    // @OneToMany
+    // @LazyCollection(LazyCollectionOption.FALSE)
+    // private List<Product> products;
 //    @OneToMany
 //    @LazyCollection(LazyCollectionOption.FALSE)
 //    private List<PurchaseOrder> purchaseOrders;

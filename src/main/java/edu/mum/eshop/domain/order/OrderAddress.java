@@ -1,4 +1,4 @@
-package edu.mum.eshop.domain.purchaseOrder;
+package edu.mum.eshop.domain.order;
 
 import edu.mum.eshop.domain.userinfo.Address;
 import lombok.Data;

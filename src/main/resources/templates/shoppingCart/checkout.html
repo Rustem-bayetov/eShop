@@ -61,6 +61,12 @@
                         <a th:href="@{/profile/}" class="btn btn-link align-self-end">Change billing address</a>
                     </div>
 
+                    <div th:if="${paymentMethod != null}" class="card card-body border border-light mb-4">
+                        <h4 class="mb-3">Payment method</h4>
+                        <p th:text="${paymentMethod}" class="mb-0"></p>
+                        <a th:href="@{/profile/}" class="btn btn-link align-self-end">Change payment method</a>
+                    </div>
+
                     <hr class="mb-4">
                     <button id="btnPlaceOrder" class="btn btn-primary btn-lg btn-block has-spinner" type="submit">Place order</buttonid>
                 </div>

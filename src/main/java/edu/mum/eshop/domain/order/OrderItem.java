@@ -1,4 +1,4 @@
-package edu.mum.eshop.domain.purchaseOrder;
+package edu.mum.eshop.domain.order;
 
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
@@ -21,9 +21,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "checkout_id")
-    private OrderCheckout checkout;
+    // @ManyToOne
+    // @JoinColumn(name = "checkout_id")
+    // private OrderCheckout checkout;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

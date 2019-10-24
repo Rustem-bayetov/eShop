@@ -1,6 +1,7 @@
 package edu.mum.eshop.domain.userinfo;
 
 import edu.mum.eshop.domain.users.User;
+import edu.mum.eshop.util.Helpers;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,4 +35,9 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Override
+    public String toString() {
+        return type + " card " + Helpers.beautifyCardNumber(cardNumber) + " (" + cardName + ")";
+    }
 }

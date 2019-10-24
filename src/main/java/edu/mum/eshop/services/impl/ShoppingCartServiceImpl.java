@@ -1,10 +1,10 @@
 package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.classes.ZenResult;
-import edu.mum.eshop.domain.purchaseOrder.OrderAddress;
-import edu.mum.eshop.domain.purchaseOrder.OrderAddressType;
-import edu.mum.eshop.domain.purchaseOrder.OrderCheckout;
-import edu.mum.eshop.domain.purchaseOrder.OrderPaymentMethod;
+import edu.mum.eshop.domain.order.OrderAddress;
+import edu.mum.eshop.domain.order.OrderAddressType;
+import edu.mum.eshop.domain.order.OrderCheckout;
+import edu.mum.eshop.domain.order.OrderPaymentMethod;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
 import edu.mum.eshop.domain.userinfo.Address;

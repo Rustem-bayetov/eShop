@@ -1,4 +1,4 @@
-package edu.mum.eshop.domain.purchaseOrder;
+package edu.mum.eshop.domain.order;
 
 public enum OrderAddressType {
     BILLING, SHIPPING

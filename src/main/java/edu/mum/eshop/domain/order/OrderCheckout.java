@@ -1,4 +1,4 @@
-package edu.mum.eshop.domain.purchaseOrder;
+package edu.mum.eshop.domain.order;
 
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
@@ -7,7 +7,9 @@ import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,6 +23,9 @@ public class OrderCheckout {
 
         if (cart == null) return;
 
+        checkoutDate = new Date();
+        totalSum = cart.getTotalSum();
+
         setUser(cart.getUser());
         for (ShoppingCartItem cartItem : cart.getItems()) {
             items.add(new OrderItem(cartItem));
@@ -30,6 +35,10 @@ public class OrderCheckout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private Date checkoutDate;
+
+    private double totalSum;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
