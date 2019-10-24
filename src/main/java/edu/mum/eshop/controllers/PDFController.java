@@ -19,6 +19,6 @@ public class PDFController extends BaseController {
         Integer checkout_id = Integer.parseInt(id);
         model.addAttribute("orders", ordersService.getMyCheckoutById(checkout_id).getItems());
         model.addAttribute("total", ordersService.getMyCheckoutById(checkout_id).getTotalSum());
-        return "pdf/generatePdf";
+        return "generatePDF";
     }
 }
