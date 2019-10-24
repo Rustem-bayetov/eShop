@@ -82,7 +82,7 @@ public class UserController extends BaseController {
         User buyer = getUser();
         User seller = usersService.getUserById(sellerid);
         User savedBuyer = usersService.followSeller(seller, buyer);
-        model.addAttribute("savedBuyer", savedBuyer);
-        return "/profile";
+//        model.addAttribute("savedBuyer", savedBuyer);
+        return "redirect:/profile/";
     }
 }

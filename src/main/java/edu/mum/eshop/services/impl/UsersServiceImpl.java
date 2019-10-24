@@ -55,7 +55,7 @@ public class UsersServiceImpl extends BaseService implements UsersService {
         if (seller.getRole().getId() == 2){
             sellers.add(seller);
             List<User> oldList = buyer.getFollowedSellers();
-            for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
+            if(oldList.size()>0) for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
             buyer.setFollowedSellers(sellers);
             return userRepo.save(buyer);
         }else {
