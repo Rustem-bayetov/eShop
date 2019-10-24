@@ -26,4 +26,5 @@ public interface UsersService {
     void addLoyaltyPoints(Integer loyaltyPoints);
 
     void useLoyaltyPoints(Integer loyaltyPoints);
+    List<User> getSellerFollowers(Integer sellerId);
 }
