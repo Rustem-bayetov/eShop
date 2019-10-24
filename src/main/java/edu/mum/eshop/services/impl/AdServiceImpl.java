@@ -9,11 +9,14 @@ import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.repositories.ads.AdRepository;
 import edu.mum.eshop.repositories.ads.AdRequestRepository;
 import edu.mum.eshop.services.AdService;
+import edu.mum.eshop.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AdServiceImpl implements AdService {
@@ -21,8 +24,6 @@ public class AdServiceImpl implements AdService {
     AdRepository adRepository;
     @Autowired
     AdRequestRepository adRequestRepository;
-
-
     @Override
     public Iterable<Ad> getAllAds() {
         return adRepository.findAll();
@@ -100,30 +101,41 @@ public class AdServiceImpl implements AdService {
         }
         return null;
     }
-
-
-    @Override
-    public ZenResult createAdRequest(Product product) {
+    @Override public ZenResult createAdRequest(Product product) {
         if (isAdRequestExists(product.getId())) {
             return new ZenResult("This product is already promoted");
         }
-
         AdRequest request = new AdRequest();
         request.setProduct(product);
         request.setAdRequestStatus(AdRequestStatus.CREATED);
-
         request = adRequestRepository.save(request);
         ZenResult result = new ZenResult();
         request.setId(request.getId());
-
         return result;
     }
-
-    @Override
-    public boolean isAdRequestExists(Integer productId) {
+    @Override public boolean isAdRequestExists(Integer productId) {
         List<AdRequest> existingRequest = adRequestRepository.findAdRequestByProductId(productId);
-
         return (existingRequest != null && existingRequest.size() > 0);
-
+    }
+    @Override public List<Ad> get3Ads(){
+        List<Ad> allAds = Util.iterableToCollection(adRepository.findAll());
+        for (int i = 0 ; i < allAds.size() ; i++){
+            if (allAds.get(i).getAdRequest().getAdRequestStatus() == AdRequestStatus.REJECTED) {
+                allAds.remove(i);i--; } }
+        if (allAds.size() <= 3) return allAds;
+        else { List<Ad> random3Ads = new ArrayList<>();
+            int size = allAds.size();
+            Random random = new Random();
+            int random1 ,random2 , random3;
+            random1 = random.ints(0,(size)).findFirst().getAsInt();
+            random2 = random.ints(0, (size)).findFirst().getAsInt();
+            random3 = random.ints(0, (size)).findFirst().getAsInt();
+            while (random2 == random1) { random2 = random.ints(0, (size)).findFirst().getAsInt(); }
+            while (random3 == random1 && random3 == random2) { random3 = random.ints(0, (size)).findFirst().getAsInt(); }
+            random3Ads.add(allAds.get(random1));
+            random3Ads.add(allAds.get(random2));
+            random3Ads.add(allAds.get(random3));
+            return random3Ads;
+        }
     }
 }

@@ -24,6 +24,30 @@
 
                 <div class="col-md-9">
                     <div class="row">
+                        <!--ads begin here-->
+                        <div th:each="ad:${ads}" class="col-lg-4 col-md-6 marginTop-30 wow fadeIn">
+                            <div class="card text-center height-100p shadow-v1">
+                                <span th:if="${ad.product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${ad.product.discount} + '%'">-20%</span>
+                                <span class="badge badge-pill badge-primary position-absolute top-20 right-10">Promoted</span>
+                                <div class="card-header">
+                                    <img class="w-100" th:src="'/resources/' + ${ad.product.imageUrl}" th:alt="${ad.product.title}">
+                                </div>
+                                <div class="card-body px-3 py-0">
+                                    <a th:href="@{'/products/' + ${ad.product.id}}" class="h6" th:text="${ad.product.title}">product title</a>
+                                    <!--                                    <p class="text-gray" th:text="${product.description}">description</p>-->
+                                    <div class="">
+                                        <p th:if="${ad.product.discount} > 0" class="mb-0 font-weight-semiBold">
+                                            <span class="text-primary" th:text="${#numbers.formatDecimal(ad.product.price - (ad.product.price / 100) * ad.product.discount, 0, 'COMMA', 2, 'POINT')}">$65.45</span>
+                                            <span class=" text-gray"><s th:text="${#numbers.formatDecimal(ad.product.price, 0, 'COMMA', 2, 'POINT')}">$0</s></span>
+                                        </p>
+                                        <p th:if="${ad.product.discount} == 0" class="mb-0 font-weight-semiBold">
+                                            <span class="text-primary" th:text="${#numbers.formatDecimal(ad.product.price, 0, 'COMMA', 2, 'POINT')}">$0</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--ads above here-->
                         <div th:each="product : ${products}" class="col-lg-4 col-md-6 marginTop-30 wow fadeIn">
                             <div class="card text-center height-100p shadow-v1">
                                 <span th:if="${product.discount} > 0" class="badge badge-pill badge-primary position-absolute top-20 left-10" th:text="'-' + ${product.discount} + '%'">-20%</span>

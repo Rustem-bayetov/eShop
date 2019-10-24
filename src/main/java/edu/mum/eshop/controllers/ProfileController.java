@@ -84,7 +84,7 @@ public class ProfileController extends BaseController {
     public String deleteShipping(@RequestParam("id") String id){
         Integer addr_id = Integer.parseInt(id);
         Address address = addressService.findAddressById(addr_id);
-        System.out.println(address);
+//        System.out.println(address);
         if (address != null){
             addressService.deleteAddressById(addr_id);
         }

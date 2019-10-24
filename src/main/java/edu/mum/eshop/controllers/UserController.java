@@ -92,10 +92,10 @@ public class UserController {
         User user = usersService.getUserById(id);
         model.addAttribute("user", user);
         if (decision == Decision.APPROVE) {
-            System.out.println("Approved");
+//            System.out.println("Approved");
             usersService.decideSellerRequest(user, Decision.APPROVE);
         } else if (decision == Decision.REJECT) {
-            System.out.println("Rejected");
+//            System.out.println("Rejected");
             usersService.decideSellerRequest(user, Decision.REJECT); }
         return "redirect:/users/pendingapproval";
     }

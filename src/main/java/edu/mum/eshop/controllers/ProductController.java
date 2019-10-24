@@ -3,6 +3,7 @@ package edu.mum.eshop.controllers;
 import edu.mum.eshop.EshopApplication;
 import edu.mum.eshop.Session;
 import edu.mum.eshop.classes.ZenResult;
+import edu.mum.eshop.domain.ads.Ad;
 import edu.mum.eshop.domain.product.Category;
 import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.product.ProductFilter;
@@ -37,28 +38,28 @@ public class ProductController extends BaseController {
     public String products(@ModelAttribute("filter") ProductFilter filter, Model model) {
         // System.out.println(filter);
 
+//        System.out.println(getUser());
+        List<Ad> ads = adService.get3Ads();
+//        System.out.println("\n"+ads);
+        model.addAttribute("ads", ads);
         model.addAttribute("products", productService.getAllProducts(filter));
-
         return "products/index";
     }
 
     @GetMapping("/{id}")
     public String details(@PathVariable int id, Model model) {
         Product product = new Product();
-
         if (id > 0) {
             product = productService.getById(id);
         }
-
         model.addAttribute("product", product);
-
         return "products/details";
     }
-
     @GetMapping("/mystore")
     @PreAuthorize("hasAnyAuthority('SELLER')")
     public String myStore(@ModelAttribute("filter") ProductFilter filter, Model model) {
         // System.out.println(filter);
+//        System.out.println(filter);
 
         model.addAttribute("products", productService.getMyProducts(filter));
 
@@ -68,7 +69,7 @@ public class ProductController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAnyAuthority('SELLER')")
     public String editProduct(@PathVariable int id, Model model) {
-        System.out.println(id);
+//        System.out.println(id);
 
         Product product = new Product();
 
@@ -84,7 +85,7 @@ public class ProductController extends BaseController {
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasAnyAuthority('SELLER')")
     public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
-        System.out.println(product);
+//        System.out.println(product);
 
         if (bindingResult.hasErrors()) {
             return "products/edit";

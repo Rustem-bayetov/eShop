@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface AdService {
     Iterable<Ad> getAllAds();
     Ad saveAd(Ad ad);
-
     Ad decideAdRequest(AdRequest adRequest, Decision decision);
     Optional<Ad> getAdById(Integer id);
     AdRequest saveAdRequest(AdRequest adRequest);
@@ -19,10 +18,8 @@ public interface AdService {
     Optional<AdRequest> getAdRequestById(Integer id);
     Ad approveAdRequestReturnAd(AdRequest adRequest);
     AdRequest approveAdRequestReturnAdRequest(AdRequest adRequest);
-
     List<AdRequest> getAllNoneApprovedAdRequests();
-
     ZenResult createAdRequest(Product product);
-
     boolean isAdRequestExists(Integer productId);
+    public List<Ad> get3Ads();
 }
