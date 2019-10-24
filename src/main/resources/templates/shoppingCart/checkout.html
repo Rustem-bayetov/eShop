@@ -39,7 +39,7 @@
                             <div>
                                 <h6 th:text="${item.product.title}" class="my-0">Product name</h6>
                             </div>
-                            <span th:text="${item.quantity == 1} ? '$' + ${item.product.price} : '$' + ${item.product.price} + ' (x' + ${item.quantity} + ')'" class="text-muted">$0</span>
+                            <span th:text="${item.quantity == 1} ? '$' + ${item.product.getDiscountedPrice()} : '$' + ${item.product.getDiscountedPrice()} + ' (x' + ${item.quantity} + ')'" class="text-muted">$0</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span th:if="${session.loggedInUser.loyaltyPoints == null || session.loggedInUser.loyaltyPoints == 0}">You have no loyalty points</span>

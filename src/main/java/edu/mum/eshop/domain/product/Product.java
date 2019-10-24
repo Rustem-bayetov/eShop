@@ -25,6 +25,11 @@ public class Product {
     @NotNull
     private Double price;
 
+    @Transient
+    public Double getDiscountedPrice(){
+        return price - (price / 100) * discount;
+    }
+
     @Max(100)
     @NotNull
     private Integer discount;

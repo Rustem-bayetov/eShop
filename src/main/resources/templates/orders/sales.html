@@ -41,7 +41,7 @@
                                 <span th:if="${sale.status.name() == 'DELIVERED'}" th:text="' on: ' + ${sale.deliveredDate.toLocaleString()}"></span>
                             </h5>
                             <p th:text="${sale.product.title}" class="card-text"></p>
-                            <p th:text="'$' + ${sale.product.price * sale.quantity}"></p>
+                            <p th:text="'$' + ${sale.product.getDiscountedPrice() * sale.quantity}"></p>
                             <p th:if="${sale.quantity > 1}" th:text="'Quantity: ' + ${sale.quantity}"></p>
                             <hr class="border" />
                             <p th:text="'Order date: ' + ${sale.checkout.checkoutDate.toLocaleString()}"></p>

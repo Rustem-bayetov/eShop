@@ -69,7 +69,7 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
         item.setProduct(productService.getById(productId));
         item.setQuantity(quantity);
         cart.getItems().add(item);
-        cart.setTotalSum(cart.getTotalSum() + item.getProduct().getPrice() * item.getQuantity());
+        cart.setTotalSum(cart.getTotalSum() + item.getProduct().getDiscountedPrice() * item.getQuantity());
         result.setValue(shoppingCartRepository.save(cart));
 
         return result;

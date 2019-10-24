@@ -21,7 +21,7 @@ function showMenuShoppingCart(data) {
             div.append($("<img>").addClass("dropdown-cart__img").attr("src", '/resources/' + item.product.imageUrl).attr("alt", item.product.title));
             let divBody = $("<div>").addClass("media-body pl-3");
             divBody.append($("<a>").attr("href", "#").addClass("h6").text(item.product.title));
-            divBody.append($("<span>").addClass("text-primary").text("$" + item.product.price.toFixed(2)));
+            divBody.append($("<span>").addClass("text-primary").text("$" + (item.product.price - ((item.product.price / 100) * item.product.discount)).toFixed(2)));
             if (item.quantity > 1) {
                 divBody.append($("<span>").addClass("text-secondary").text(" (x" + item.quantity + ")"));
             }

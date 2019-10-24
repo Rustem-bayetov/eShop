@@ -112,7 +112,7 @@
                     )
                     .append($("<td>").text("$" + item.product.price.toFixed(2)))
                     .append($("<td>").text(item.quantity))
-                    .append($("<td>").text("$" + (item.product.price * item.quantity).toFixed(2)))
+                    .append($("<td>").text("$" + ((item.product.price - ((item.product.price / 100) * item.product.discount)) * item.quantity).toFixed(2)))
                     .append($("<td>").addClass("text-center")
                         .append($("<a>").attr("href", "#").attr("onclick", `return deleteFromCart(${item.product.id})`)
                             .append("<i>").addClass("ti-close")))
