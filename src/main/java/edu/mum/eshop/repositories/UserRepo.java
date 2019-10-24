@@ -17,4 +17,6 @@ public interface UserRepo extends CrudRepository<User, Integer> {
     @Transactional @Modifying
     @Query(value = "DELETE FROM user_followed_sellers where user_user_id = ?1 and followed_sellers_user_id= ?2", nativeQuery = true)
     void unfollowSellerDB(Integer buyerId, Integer sellerId);
+    @Query(value = "Select * from user where user_id in (select user_user_id) from user_followed_sellers where followed_sellers_user_id= ?1)", nativeQuery = true)
+    List<User> getSellerFollowers(Integer sellerId);
 }

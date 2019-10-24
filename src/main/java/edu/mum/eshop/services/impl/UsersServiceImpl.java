@@ -82,6 +82,7 @@ public class UsersServiceImpl extends BaseService implements UsersService {
             clearSessionUsers();
             return userRepo.save(getUser());
         } else {
+            clearSessionUsers();
             return getUser();
         }
     }
