@@ -28,8 +28,8 @@ public class ProductServiceImpl extends BaseService implements ProductService {
     @Override
     public List<Product> getAllProducts(ProductFilter filter) {
 
-        System.out.println("from service");
-        System.out.println(getUser());
+//        System.out.println("from service");
+//        System.out.println(getUser());
 
         return Util.iterableToCollection(productRepository.getAllProducts());
     }

@@ -15,7 +15,7 @@ public class NotificationServiceImpl implements NotificationSerivce {
     @Override public Notification getById(Integer id){return  notificationRepository.findById(id).get();}
     @Override public void markNotificationRead(Notification notification) {
         notification.setNotificationStatus(NotificationStatus.READ);
-        System.out.println(notification);
+//        System.out.println(notification);
         notificationRepository.save(notification); }
     @Override public List<Notification> findUnReadByUserId(Integer uid){ return notificationRepository.findUnReadByUserId(uid); }
 }

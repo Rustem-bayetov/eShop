@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AdServiceImpl implements AdService {
@@ -128,11 +129,19 @@ public class AdServiceImpl implements AdService {
         else {
             List<Ad> random3Ads = new ArrayList<>();
             int size = allAds.size();
-            Long iterator = new Long(0);
-            Long multiplier = Math.round(10 * Math.random());
-            if (size>=multiplier+3)iterator = size - multiplier;
-            else if(size < multiplier) iterator = multiplier -size ;
-            for(int i = 0 ;  i< 3 ; i++) random3Ads.add(allAds.get(iterator.intValue()+i));
+            Random random = new Random();
+            int random2 , random3;
+            int random1 = random.ints(0,(size)).findFirst().getAsInt();
+            random2 = random.ints(0, (size)).findFirst().getAsInt();
+            random3 = random.ints(0, (size)).findFirst().getAsInt();
+            while (random2 == random1) {
+                random2 = random.ints(0, (size)).findFirst().getAsInt(); }
+            while (random3 == random1 && random3 == random2) {
+                random3 = random.ints(0, (size)).findFirst().getAsInt(); }
+
+            random3Ads.add(allAds.get(random1));
+            random3Ads.add(allAds.get(random2));
+            random3Ads.add(allAds.get(random3));
             return random3Ads;
         }
     }
