@@ -95,18 +95,14 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/user/follow/{sellerid}")
-    public String followSeller(Model model, @PathVariable("sellerid") Integer sellerid) {
-        User buyer = getUser();
-        User seller = usersService.getUserById(sellerid);
-        User savedBuyer = usersService.followSeller(seller, buyer);
-//        model.addAttribute("savedBuyer", savedBuyer);
+    public String followSeller( @PathVariable("sellerid") Integer sellerid) {
+        User savedBuyer = usersService.followSeller(usersService.getUserById(sellerid), getUser());
         return "redirect:/profile/";
     }
 
     @GetMapping("/user/unfollow/{sellerid}")
-    public String unFollowSeller(Model model, @PathVariable("sellerid") Integer sellerid) {
-        User seller = usersService.getUserById(sellerid);
-        User savedBuyer = usersService.unFollowSeller(seller, getUser());
+    public String unFollowSeller(@PathVariable("sellerid") Integer sellerid) {
+        User savedBuyer = usersService.unFollowSeller(usersService.getUserById(sellerid), getUser());
         return "redirect:/profile/";
     }
 }

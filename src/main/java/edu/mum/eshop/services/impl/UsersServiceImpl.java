@@ -68,17 +68,21 @@ public class UsersServiceImpl extends BaseService implements UsersService {
 
     @Override
     public User followSeller(User seller, User buyer) {
-        List<User> sellers = new ArrayList<>();
         if (seller.getRole().getId() == 2) {
+            List<User> sellers = new ArrayList<>();
             sellers.add(seller);
-            List<User> oldList = buyer.getFollowedSellers();
-            if (oldList.size() > 0) for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
-            buyer.setFollowedSellers(sellers);
+            List<User> oldList = getUser().getFollowedSellers();
+            if (oldList.size() >= 0) for (int i = 0; i < oldList.size(); i++) sellers.add(oldList.get(i));
+            getUser().getFollowedSellers().add(seller);
+//            getUser().setFollowedSellers(sellers);
+            getUser().setFollowedSellers(getUser().getFollowedSellers());
+            userRepo.save(getUser());
+            System.out.println("is empty result? " + getUser().getFollowedSellers().isEmpty());
+            System.out.println("followed sellers array size " + getUser().getFollowedSellers().size());
             clearSessionUsers();
-            return userRepo.save(buyer);
+            return userRepo.save(getUser());
         } else {
-            clearSessionUsers();
-            return buyer;
+            return getUser();
         }
     }
 
@@ -89,11 +93,11 @@ public class UsersServiceImpl extends BaseService implements UsersService {
 //            System.out.println(oldList);
 //            buyer.setFollowedSellers(oldList);
         userRepo.unfollowSellerDB(getUser().getId(), seller.getId());
-        List<User> oldList = getUser().getFollowedSellers();
-        oldList.remove(seller);
+//        List<User> oldList = getUser().getFollowedSellers();
+//        oldList.remove(seller);
         userRepo.save(getUser());
         clearSessionUsers();
-        System.out.println("is empty result? " + buyer.getFollowedSellers().isEmpty());
+        System.out.println("is empty result? " + getUser().getFollowedSellers().isEmpty());
         System.out.println("followed sellers array size " + getUser().getFollowedSellers().size());
         return buyer;
     }
