@@ -2,6 +2,7 @@ package edu.mum.eshop.services.impl;
 
 import edu.mum.eshop.classes.ZenResult;
 import edu.mum.eshop.domain.order.*;
+import edu.mum.eshop.domain.product.Product;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCart;
 import edu.mum.eshop.domain.shoppingCart.ShoppingCartItem;
 import edu.mum.eshop.domain.userinfo.Address;
@@ -58,6 +59,12 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
             return result;
         }
 
+        Product product = productService.getById(productId);
+        if (product.getAvailableCount() < quantity) {
+            result.addError("Not enought items in stock");
+            return result;
+        }
+
         ShoppingCart cart = getMyShoppingCart();
         if (cart == null) {
             cart = new ShoppingCart();
@@ -66,7 +73,7 @@ public class ShoppingCartServiceImpl extends BaseService implements ShoppingCart
         }
 
         ShoppingCartItem item = new ShoppingCartItem();
-        item.setProduct(productService.getById(productId));
+        item.setProduct(product);
         item.setQuantity(quantity);
         cart.getItems().add(item);
         cart.setTotalSum(cart.getTotalSum() + item.getProduct().getDiscountedPrice() * item.getQuantity());
